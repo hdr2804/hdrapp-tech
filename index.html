@@ -210,6 +210,16 @@
       .badge.pending { background: var(--accent-soft); color: var(--accent-ink); }
       .badge.closed { border: 1px solid var(--line); color: var(--ink-soft); }
 
+      .sub-head {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 12.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ink-soft);
+        margin: 34px 0 2px;
+      }
+      .sub-head:first-of-type { margin-top: 0; }
+
       /* ---------- Method ---------- */
       .method { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
       .method-card {
@@ -479,9 +489,105 @@
         </div>
       </section>
 
+      <!-- ================= POIDH ================= -->
+      <section id="poidh">
+        <div class="sec-head"><span class="num">04</span><h2>On-chain bounties — poidh</h2></div>
+        <p class="sec-note">Alongside security research, I compete in open bounties on <strong>poidh</strong> — an on-chain bounty platform where anyone can post a task with an ETH prize pool and anyone can submit a claim. The submitted claims below were filed as @Hdr284 and verified live on poidh — and where a claim hasn't been filed yet, it says so. None of these has been paid out — each status is stated exactly as it stands.</p>
+
+        <p class="sub-head">Submitted claims</p>
+        <div class="work-list">
+
+          <article class="work-item">
+            <span class="work-tag">POIDH</span>
+            <div>
+              <h3>Seer — "Rename Risk Pricing" · bounty #39</h3>
+              <p>Prize pool 0.5 ETH (~$1,204). Claim #156, entry name <strong>"Spread"</strong> — one proposed name with its rationale and a square image, submitted into a field of 15 claims.</p>
+              <span class="badge pending">Submitted · awaiting Seer team vote after Oct 24, 2026</span>
+            </div>
+            <span class="work-date">Oct 17, 2026</span>
+          </article>
+
+          <article class="work-item">
+            <span class="work-tag">POIDH</span>
+            <div>
+              <h3>Seer — "Design Seer's Six Interfaces" · bounty #38</h3>
+              <p>Prize pool 0.5 ETH (~$1,204), plus 4,000 USDC if a non-internal submission wins. Claim #171, entry <strong>"Convergence"</strong> — a unified design system across six working interface demos, with a public repo at <a href="https://github.com/hdr2804/seer-convergence" target="_blank" rel="noopener">github.com/hdr2804/seer-convergence</a>.</p>
+              <span class="badge pending">Submitted · awaiting Seer team vote after Oct 24, 2026</span>
+            </div>
+            <span class="work-date">Oct 17, 2026</span>
+          </article>
+
+          <article class="work-item">
+            <span class="work-tag">POIDH · MAINNET</span>
+            <div>
+              <h3>Snowmoon — "Bring Snowmoon to Life" · bounty #34</h3>
+              <p>Prize pool 0.13035 ETH (~$306). Claim #149, <strong>"The Ascent"</strong> — a ~85-second film adaptation of Snowmoon Chapter 6 (the Keeper confirmation), published in an X post with an open-source repo at <a href="https://github.com/hdr2804/snowmoon-the-ascent" target="_blank" rel="noopener">github.com/hdr2804/snowmoon-the-ascent</a>. One of 14 claims.</p>
+              <span class="badge pending">Submitted · awaiting winner nomination / vote after Oct 19, 2026</span>
+            </div>
+            <span class="work-date">Oct 16, 2026</span>
+          </article>
+
+          <article class="work-item">
+            <span class="work-tag">POIDH · BASE</span>
+            <div>
+              <h3>BOAR — "Make the Case for Private AI" · bounty #1482</h3>
+              <p>Prize pool 0.0082 ETH (~$20). Claim #8857, <strong>"The question never travels"</strong> — an original X post arguing for private AI, tagging @boar_app.</p>
+              <span class="badge pending">Submitted · winner picked by the issuer after Oct 31, 2026</span>
+            </div>
+            <span class="work-date">Oct 17, 2026</span>
+          </article>
+
+        </div>
+
+        <p class="sub-head">Published — claim pending</p>
+        <div class="work-list">
+
+          <article class="work-item">
+            <span class="work-tag">POIDH · BASE</span>
+            <div>
+              <h3>poidh — "poidh as Freedom Tech" · bounty #1485</h3>
+              <p>Prize pool $15.85. A 45-second explainer video — what poidh is, how it works in four steps, and why it counts as freedom tech — published on X by @Hdr284 on Oct 17, 2026.</p>
+              <span class="badge closed">Content published · claim not yet submitted · deadline Oct 24, 2026</span>
+            </div>
+            <span class="work-date">Oct 17, 2026</span>
+          </article>
+
+        </div>
+
+        <p class="sub-head">Completed participation</p>
+        <div class="work-list">
+
+          <article class="work-item">
+            <span class="work-tag">POIDH · BASE</span>
+            <div>
+              <h3>musemaxxing · bounty #1443</h3>
+              <p>Joined as a verified recruit — slot 20 of 20 — with the agent "USAM" verified on Sep 28, 2026.</p>
+              <span class="badge closed">Participation completed · verified recruit</span>
+            </div>
+            <span class="work-date">Sep 28, 2026</span>
+          </article>
+
+        </div>
+
+        <p class="sub-head">Closed without payout</p>
+        <div class="work-list">
+
+          <article class="work-item">
+            <span class="work-tag">POIDH</span>
+            <div>
+              <h3>ZeroDev · bounty #332</h3>
+              <p>The work was delivered as GitHub PR #1541, which was closed unmerged and unreviewed on Oct 3, 2026. The claim ended at $0.</p>
+              <span class="badge closed">Closed · PR unmerged · $0</span>
+            </div>
+            <span class="work-date">Oct 3, 2026</span>
+          </article>
+
+        </div>
+      </section>
+
       <!-- ================= METHOD ================= -->
       <section id="method">
-        <div class="sec-head"><span class="num">04</span><h2>How I hunt</h2></div>
+        <div class="sec-head"><span class="num">05</span><h2>How I hunt</h2></div>
         <div class="method">
           <div class="method-card">
             <h3>Scope first, recon second</h3>
