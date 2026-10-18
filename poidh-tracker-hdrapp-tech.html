@@ -1,0 +1,1819 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Poidh Tracker — HDR · hdrapp.tech</title>
+    <meta name="description" content="A public board of poidh bounties — every bounty currently open on poidh plus the most recently closed, grouped by chain: Ethereum Mainnet, Base, and Arbitrum." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #faf7f1;
+        --surface: #fffdf9;
+        --ink: #1c1a17;
+        --ink-2: #4c463e;
+        --ink-3: #7d766a;
+        --line: #e3dccd;
+        --line-strong: #cfc6b2;
+        --accent: #9a4a12;
+        --accent-soft: #f6e8d8;
+        --chip-await-bg: #fdf3d7;
+        --chip-await-ink: #7a5410;
+        --chip-await-dot: #c08a1a;
+        --chip-pending-bg: #e4edf7;
+        --chip-pending-ink: #2c4d72;
+        --chip-pending-dot: #4a7db5;
+        --chip-done-bg: #e7eee2;
+        --chip-done-ink: #42583a;
+        --chip-done-dot: #6c8a5c;
+        --chip-filed-bg: #eee9e0;
+        --chip-filed-ink: #5d564a;
+        --chip-filed-dot: #8a8172;
+        --count-bg: #1c1a17;
+        --count-ink: #faf7f1;
+        --count-dim: #b8b0a0;
+        --eth: #627eea;
+        --base: #0052ff;
+        --arb: #28a0f0;
+        --eth-head: #5468d8;
+        --base-head: #0052ff;
+        --arb-head: #1473b8;
+        --eth-tint: #e7ebfd;
+        --base-tint: #e0ebff;
+        --arb-tint: #dff1fd;
+        --eth-wash: #f3f5fe;
+        --base-wash: #eff4ff;
+        --arb-wash: #eff8fd;
+        --gold: #9c6b00;
+        --chip-active-bg: #dcf5e3;
+        --chip-active-ink: #0c6b32;
+        --chip-active-dot: #17a34a;
+        --chip-closed-bg: #f6e7e3;
+        --chip-closed-ink: #8f4438;
+        --chip-closed-dot: #c05a45;
+        --tag-cancel-bg: #fcefc9;
+        --tag-cancel-ink: #8a5c00;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #16140f;
+          --surface: #1e1b15;
+          --ink: #f0ebdf;
+          --ink-2: #c9c1ae;
+          --ink-3: #948b77;
+          --line: #33301f;
+          --line-strong: #4a4636;
+          --accent: #e08b45;
+          --accent-soft: #33261a;
+          --chip-await-bg: #38301a;
+          --chip-await-ink: #eec25e;
+          --chip-await-dot: #e0ae35;
+          --chip-pending-bg: #1e2c3d;
+          --chip-pending-ink: #9cc0e8;
+          --chip-pending-dot: #6c9fd8;
+          --chip-done-bg: #26301f;
+          --chip-done-ink: #aed09c;
+          --chip-done-dot: #8cb87a;
+          --chip-filed-bg: #2c2820;
+          --chip-filed-ink: #c9c1ae;
+          --chip-filed-dot: #a89e88;
+          --count-bg: #f0ebdf;
+          --count-ink: #1c1a17;
+          --count-dim: #6e675a;
+          --eth-head: #93a7f5;
+          --base-head: #7aa5ff;
+          --arb-head: #63bdf7;
+          --eth-tint: #262b47;
+          --base-tint: #16294f;
+          --arb-tint: #14303f;
+          --eth-wash: #1b1e2b;
+          --base-wash: #171e2e;
+          --arb-wash: #16222b;
+          --gold: #f0b84a;
+          --chip-active-bg: #14301e;
+          --chip-active-ink: #7be2a3;
+          --chip-active-dot: #2fbf71;
+          --chip-closed-bg: #332420;
+          --chip-closed-ink: #e0a294;
+          --chip-closed-dot: #cf6f56;
+          --tag-cancel-bg: #3a2c10;
+          --tag-cancel-ink: #f2c14e;
+        }
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "IBM Plex Sans", -apple-system, "Segoe UI", sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+      }
+      a { color: var(--accent); text-decoration: none; }
+      a:hover { text-decoration: underline; }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+      .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px 72px; }
+
+      /* ---------- top bar ---------- */
+      .topbar {
+        display: flex; align-items: center; justify-content: flex-end;
+        gap: 16px; padding: 20px 0 18px;
+        border-bottom: 1px solid var(--line);
+      }
+      .socials { display: flex; gap: 18px; font-family: "IBM Plex Mono", monospace; font-size: 13px; }
+      .socials a { color: var(--ink-2); }
+      .socials a:hover { color: var(--accent); text-decoration: none; }
+
+      /* ---------- header ---------- */
+      header.page { padding: 40px 0 8px; }
+      .kicker {
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent);
+        margin: 0 0 14px;
+      }
+      h1 {
+        font-size: clamp(30px, 5.4vw, 44px); line-height: 1.12; font-weight: 700;
+        letter-spacing: -0.015em; margin: 0 0 14px;
+      }
+      .lede { font-size: 17px; color: var(--ink-2); max-width: 62ch; margin: 0; }
+      .asof {
+        margin: 18px 0 0; font-family: "IBM Plex Mono", monospace; font-size: 13px;
+        color: var(--ink-3);
+      }
+      .asof strong { color: var(--ink-2); font-weight: 600; }
+
+      /* ---------- summary strip ---------- */
+      .summary {
+        display: grid; grid-template-columns: repeat(4, 1fr);
+        border: 1px solid var(--line-strong); border-radius: 10px;
+        background: var(--surface); margin: 32px 0 8px; overflow: hidden;
+      }
+      .stat { padding: 18px 18px 16px; }
+      .stat + .stat { border-left: 1px solid var(--line); }
+      .stat .num { font-size: 30px; font-weight: 700; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+      .stat .num small { font-size: 15px; font-weight: 600; color: var(--ink-2); letter-spacing: 0; }
+      .stat .lbl { margin-top: 8px; font-size: 13px; color: var(--ink-2); line-height: 1.4; }
+      @media (max-width: 640px) {
+        .summary { grid-template-columns: 1fr 1fr; }
+        .stat + .stat { border-left: none; }
+        .stat:nth-child(even) { border-left: 1px solid var(--line); }
+        .stat:nth-child(n + 3) { border-top: 1px solid var(--line); }
+      }
+
+      /* ---------- entries ---------- */
+      .section-head {
+        display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+        margin: 44px 0 4px;
+      }
+      .section-head h2 { font-size: 20px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+      .section-head .note { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-3); text-align: right; }
+
+      .entry {
+        border-top: 1px solid var(--line-strong);
+        padding: 26px 0 28px;
+      }
+      .entry:last-of-type { border-bottom: 1px solid var(--line-strong); }
+      .entry-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+      .issuer {
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 6px;
+      }
+      h3.title { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; margin: 0; }
+      .chain {
+        font-family: "IBM Plex Mono", monospace; font-size: 12.5px; color: var(--ink-3); margin: 5px 0 0;
+      }
+
+      .chip {
+        display: inline-flex; align-items: center; gap: 7px;
+        font-family: "IBM Plex Mono", monospace; font-size: 12px; font-weight: 600;
+        padding: 5px 11px; border-radius: 999px; white-space: nowrap; line-height: 1.3;
+      }
+      .chip::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+      .chip.await { background: var(--chip-await-bg); color: var(--chip-await-ink); }
+      .chip.await::before { background: var(--chip-await-dot); }
+      .chip.pending { background: var(--chip-pending-bg); color: var(--chip-pending-ink); }
+      .chip.pending::before { background: var(--chip-pending-dot); }
+      .chip.done { background: var(--chip-done-bg); color: var(--chip-done-ink); }
+      .chip.done::before { background: var(--chip-done-dot); }
+      .chip.filed { background: var(--chip-filed-bg); color: var(--chip-filed-ink); }
+      .chip.filed::before { background: var(--chip-filed-dot); }
+      .chip.status-active { background: var(--chip-active-bg); color: var(--chip-active-ink); letter-spacing: 0.08em; }
+      .chip.status-active::before { background: var(--chip-active-dot); }
+      .chip.status-closed { background: var(--chip-closed-bg); color: var(--chip-closed-ink); letter-spacing: 0.08em; }
+      .chip.status-closed::before { background: var(--chip-closed-dot); }
+      .chips { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+      @media (max-width: 640px) { .chips { align-items: flex-start; } }
+
+      .section-head.chain { margin-top: 56px; padding-top: 28px; border-top: 2px solid var(--ink); }
+      .section-head.chain h2 { font-size: 26px; letter-spacing: -0.015em; }
+      .legend { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 16px; font-size: 13.5px; color: var(--ink-2); align-items: center; }
+
+      .claim-line { margin: 14px 0 0; font-size: 15.5px; }
+      .claim-line .claim-name { font-weight: 600; }
+      .desc { margin: 10px 0 0; color: var(--ink-2); font-size: 15px; max-width: 68ch; }
+
+      .meta {
+        display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 24px;
+        margin-top: 18px;
+      }
+      .meta .cell .k {
+        font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600;
+        letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 3px;
+      }
+      .meta .cell .v { font-size: 14.5px; font-weight: 500; line-height: 1.45; }
+      .meta .cell .v .sub { display: block; font-weight: 400; color: var(--ink-2); font-size: 13.5px; }
+      @media (max-width: 640px) { .meta { grid-template-columns: 1fr 1fr; } }
+
+      .sources { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 13.5px; }
+      .sources .src-label {
+        font-family: "IBM Plex Mono", monospace; font-size: 11px; font-weight: 600;
+        letter-spacing: 0.11em; text-transform: uppercase; color: var(--ink-3);
+        align-self: center; margin-right: -8px;
+      }
+      .sources a { font-weight: 500; }
+      .sources a::after { content: " ↗"; font-size: 11px; }
+
+
+      /* ---------- bounty board ---------- */
+      .section-head.chain.top { margin-top: 40px; }
+      .section-head.chain.board-head { margin-top: 64px; }
+      .board-intro { margin: 12px 0 0; color: var(--ink-2); font-size: 15px; max-width: 68ch; }
+      .board-note { margin: 10px 0 0; color: var(--ink-2); font-size: 14.5px; max-width: 68ch; }
+      .board-chain {
+        display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+        margin: 36px 0 4px;
+      }
+      .board-chain h3 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 0; }
+      .board-chain .note { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-3); text-align: right; }
+      .brow {
+        display: grid; grid-template-columns: 62px 1fr auto 92px;
+        gap: 4px 16px; align-items: baseline;
+        padding: 10px 12px; border-top: 1px solid var(--line);
+        color: var(--ink);
+      }
+      .board-list .brow:last-child { border-bottom: 1px solid var(--line); }
+      .brow:hover { background: var(--surface); text-decoration: none; }
+      .brow .bid { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600; color: var(--ink-3); }
+      .brow .btitle { font-size: 15px; font-weight: 500; line-height: 1.4; min-width: 0; }
+      .brow .bpool {
+        grid-column: 4; justify-self: end;
+        font-family: "IBM Plex Mono", monospace; font-size: 14px; font-weight: 600;
+        font-variant-numeric: tabular-nums; white-space: nowrap;
+        color: var(--gold);
+      }
+      .brow .bpool::after { content: " ↗"; font-size: 11px; color: var(--gold); }
+      .btag {
+        font-family: "IBM Plex Mono", monospace; font-size: 10.5px; font-weight: 600;
+        letter-spacing: 0.05em; white-space: nowrap; justify-self: start;
+        background: var(--accent); color: var(--bg);
+        padding: 3px 9px; border-radius: 999px;
+      }
+      .btag.canceled { background: var(--tag-cancel-bg); color: var(--tag-cancel-ink); }
+      @media (max-width: 640px) {
+        .brow { grid-template-columns: 50px 1fr auto; padding: 10px 8px; }
+        .brow .bpool { grid-column: 3; grid-row: 1; }
+        .brow .btag { grid-column: 2; grid-row: 2; }
+      }
+
+      /* ---------- chain logos + tab bar ---------- */
+      .chain-logo { flex: none; display: inline-block; }
+      .chain-tab .chain-logo { width: 17px; height: 17px; }
+      .section-head h2 .chain-logo { width: 23px; height: 23px; margin-right: 10px; vertical-align: -4px; }
+      .board-chain h3 .chain-logo { width: 20px; height: 20px; margin-right: 9px; vertical-align: -4px; }
+      .chainbar {
+        position: sticky; top: 0; z-index: 60;
+        display: flex; flex-wrap: wrap; gap: 8px;
+        margin: 28px -20px 0; padding: 12px 20px;
+        background: var(--bg); border-bottom: 1px solid var(--line-strong);
+      }
+      .chain-tab {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600;
+        color: var(--ink-2); background: var(--surface);
+        border: 1px solid var(--line-strong); border-radius: 999px;
+        padding: 8px 15px; cursor: pointer; line-height: 1.3;
+      }
+      .chain-tab:hover { color: var(--accent); border-color: var(--accent); }
+      .chain-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .chain-tab.is-active { background: var(--count-bg); color: var(--count-ink); border-color: var(--count-bg); }
+      .chain-tab.is-active:hover { color: var(--count-ink); }
+
+      /* ---------- chain color pass ---------- */
+      header.page { position: relative; }
+      header.page > * { position: relative; z-index: 1; }
+      header.page::before {
+        content: ""; position: absolute; top: 12px; left: 0; right: 0;
+        height: 4px; border-radius: 999px;
+        background: linear-gradient(90deg, var(--eth) 0%, var(--base) 50%, var(--arb) 100%);
+      }
+      header.page::after {
+        content: ""; position: absolute; top: -36px; left: -48px; right: -48px;
+        height: 170px; z-index: 0; pointer-events: none;
+        background: linear-gradient(90deg, var(--eth), var(--base), var(--arb));
+        opacity: 0.10; filter: blur(52px);
+      }
+
+      .chain-tab .chain-logo { width: 21px; height: 21px; padding: 2.5px; border-radius: 6px; }
+      .chain-tab[data-chain="mainnet"] { border-color: color-mix(in srgb, var(--eth) 45%, var(--line-strong)); }
+      .chain-tab[data-chain="mainnet"] .chain-logo { background: var(--eth-tint); }
+      .chain-tab[data-chain="mainnet"]:hover { border-color: var(--eth); color: var(--eth-head); }
+      .chain-tab[data-chain="mainnet"].is-active {
+        background: var(--eth-tint); border-color: var(--eth); color: var(--ink);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--eth) 26%, transparent),
+                    0 2px 12px color-mix(in srgb, var(--eth) 38%, transparent);
+      }
+      .chain-tab[data-chain="mainnet"].is-active:hover { color: var(--ink); }
+      .chain-tab[data-chain="base"] { border-color: color-mix(in srgb, var(--base) 45%, var(--line-strong)); }
+      .chain-tab[data-chain="base"] .chain-logo { background: var(--base-tint); }
+      .chain-tab[data-chain="base"]:hover { border-color: var(--base); color: var(--base-head); }
+      .chain-tab[data-chain="base"].is-active {
+        background: var(--base-tint); border-color: var(--base); color: var(--ink);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--base) 26%, transparent),
+                    0 2px 12px color-mix(in srgb, var(--base) 38%, transparent);
+      }
+      .chain-tab[data-chain="base"].is-active:hover { color: var(--ink); }
+      .chain-tab[data-chain="arbitrum"] { border-color: color-mix(in srgb, var(--arb) 45%, var(--line-strong)); }
+      .chain-tab[data-chain="arbitrum"] .chain-logo { background: var(--arb-tint); }
+      .chain-tab[data-chain="arbitrum"]:hover { border-color: var(--arb); color: var(--arb-head); }
+      .chain-tab[data-chain="arbitrum"].is-active {
+        background: var(--arb-tint); border-color: var(--arb); color: var(--ink);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--arb) 26%, transparent),
+                    0 2px 12px color-mix(in srgb, var(--arb) 38%, transparent);
+      }
+      .chain-tab[data-chain="arbitrum"].is-active:hover { color: var(--ink); }
+
+      .board-chain[data-chain] { border-left: 3px solid var(--line-strong); padding-left: 12px; }
+      .board-chain[data-chain="mainnet"] { border-left-color: var(--eth); }
+      .board-chain[data-chain="mainnet"] h3 { color: var(--eth-head); }
+      .board-chain[data-chain="base"] { border-left-color: var(--base); }
+      .board-chain[data-chain="base"] h3 { color: var(--base-head); }
+      .board-chain[data-chain="arbitrum"] { border-left-color: var(--arb); }
+      .board-chain[data-chain="arbitrum"] h3 { color: var(--arb-head); }
+
+      .board-list[data-chain="mainnet"] { background: var(--eth-wash); border-left: 3px solid var(--eth); }
+      .board-list[data-chain="base"] { background: var(--base-wash); border-left: 3px solid var(--base); }
+      .board-list[data-chain="arbitrum"] { background: var(--arb-wash); border-left: 3px solid var(--arb); }
+
+      /* ---------- footer ---------- */
+      footer {
+        margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--line);
+      }
+      .honesty {
+        background: var(--accent-soft); border-radius: 10px; padding: 18px 20px;
+        font-size: 15px; line-height: 1.55;
+      }
+      .honesty strong { font-weight: 700; }
+      .foot-row {
+        display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+        margin-top: 26px; font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--ink-3);
+      }
+      .foot-row .socials a { color: var(--ink-2); }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+
+      <nav class="topbar" aria-label="Site">
+        <div class="socials">
+          <a href="https://x.com/Hdr284" target="_blank" rel="noopener">X · @Hdr284</a>
+          <a href="https://github.com/hdr2804" target="_blank" rel="noopener">GitHub · hdr2804</a>
+        </div>
+      </nav>
+
+      <header class="page">
+        <p class="kicker">On-chain bounties · poidh</p>
+        <h1>Poidh Tracker</h1>
+        <p class="lede">
+          A public board of poidh bounties — every bounty currently open on poidh, plus the most
+          recently closed ones, grouped by chain across Ethereum Mainnet, Base, and Arbitrum.
+          Read-only: this page is a public snapshot of the record.
+        </p>
+        <p class="asof">Snapshot pulled from poidh — <strong>Oct 18, 2026</strong> · <strong>114 active bounties</strong> listed below · Active list + closed history via poidh's public feed and indexer API — Oct 18, 2026</p>
+        <div class="legend">
+          <span class="chip status-active">Active</span><span>In progress on poidh — still accepting claims</span>
+          <span class="chip status-closed">Closed</span><span>Completed on poidh</span>
+        </div>
+      </header>
+
+      <nav class="chainbar" aria-label="Filter by chain">
+        <button type="button" class="chain-tab is-active" data-chain="all" aria-pressed="true">All chains</button>
+        <button type="button" class="chain-tab" data-chain="mainnet" aria-pressed="false"><svg class="chain-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.5 5 12.6l7 3.8z" fill="#627EEA"/><path d="M12 1.5v14.9l7-3.8z" fill="#627EEA" fill-opacity=".55"/><path d="M12 22.5v-5.4l-7-3.3z" fill="#627EEA" fill-opacity=".85"/><path d="M12 22.5v-5.4l7-3.3z" fill="#627EEA" fill-opacity=".4"/></svg><span>Ethereum Mainnet</span></button>
+        <button type="button" class="chain-tab" data-chain="base" aria-pressed="false"><svg class="chain-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="#0052FF"/><path d="M11.2 9.9h10.58a10 10 0 0 1 0 4.2H11.2z" fill="#fff"/></svg><span>Base</span></button>
+        <button type="button" class="chain-tab" data-chain="arbitrum" aria-pressed="false"><svg class="chain-logo" viewBox="0 0 2500 2500" aria-hidden="true" focusable="false"><path fill="#213147" d="M226,760v980c0,63,33,120,88,152l849,490c54,31,121,31,175,0l849-490c54-31,88-89,88-152V760c0-63-33-120-88-152l-849-490c-54-31-121-31-175,0L314,608c-54,31-87,89-87,152H226z"/><path fill="#12AAFF" d="M1435,1440l-121,332c-3,9-3,19,0,29l208,571l241-139l-289-793C1467,1422,1442,1422,1435,1440z"/><path fill="#12AAFF" d="M1678,882c-7-18-32-18-39,0l-121,332c-3,9-3,19,0,29l341,935l241-139L1678,883V882z"/><path fill="#9DCCED" d="M1250,155c6,0,12,2,17,5l918,530c11,6,17,18,17,30v1060c0,12-7,24-17,30l-918,530c-5,3-11,5-17,5s-12-2-17-5l-918-530c-11-6-17-18-17-30V719c0-12,7-24,17-30l918-530c5-3,11-5,17-5l0,0V155z M1250,0c-33,0-65,8-95,25L237,555c-59,34-95,96-95,164v1060c0,68,36,130,95,164l918,530c29,17,62,25,95,25s65-8,95-25l918-530c59-34,95-96,95-164V719c0-68-36-130-95-164L1344,25c-29-17-62-25-95-25l0,0H1250z"/><polygon fill="#213147" points="642,2179 727,1947 897,2088 738,2234"/><path fill="#FFFFFF" d="M1172,644H939c-17,0-33,11-39,27L401,2039l241,139l550-1507c5-14-5-28-19-28L1172,644z"/><path fill="#FFFFFF" d="M1580,644h-233c-17,0-33,11-39,27L738,2233l241,139l620-1701c5-14-5-28-19-28V644z"/></svg><span>Arbitrum</span></button>
+      </nav>
+
+      <div class="section-head chain board-head">
+        <h2>All active bounties on poidh</h2>
+        <span class="note">114 open bounties · Oct 18, 2026</span>
+      </div>
+      <p class="board-intro">
+        The complete list of bounties open on poidh when this snapshot was pulled on Oct 18, 2026 —
+        sorted within each chain by pool size, largest first.
+      </p>
+      <p class="board-note">
+        Closed bounties are listed in the <a href="#closed">Closed bounties</a> section below.
+      </p>
+
+      <div class="board-chain">
+        <h3>Ethereum Mainnet</h3>
+        <span class="note">8 open bounties</span>
+      </div>
+      <div class="board-list">
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/31" target="_blank" rel="noopener">
+          <span class="bid">#31</span>
+          <span class="btitle">Build the Best Offline AI Research App for Android ⛺</span>
+          <span class="bpool">$3,652.84</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/39" target="_blank" rel="noopener">
+          <span class="bid">#39</span>
+          <span class="btitle">Rename Risk Pricing</span>
+          <span class="bpool">$1,197.07</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/38" target="_blank" rel="noopener">
+          <span class="bid">#38</span>
+          <span class="btitle">DESIGN SEER&#x27;S SIX INTERFACES</span>
+          <span class="bpool">$1,197.07</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/34" target="_blank" rel="noopener">
+          <span class="bid">#34</span>
+          <span class="btitle">Bring Snowmoon to Life</span>
+          <span class="bpool">$312.07</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/28" target="_blank" rel="noopener">
+          <span class="bid">#28</span>
+          <span class="btitle">Hear a sales pitch</span>
+          <span class="bpool">$197.52</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/35" target="_blank" rel="noopener">
+          <span class="bid">#35</span>
+          <span class="btitle">Best Bounty (October 2026) 🏆</span>
+          <span class="bpool">$90.98</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/37" target="_blank" rel="noopener">
+          <span class="bid">#37</span>
+          <span class="btitle">Send Your AI Agent Into New Eden 🌍🤖</span>
+          <span class="bpool">$48.36</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/40" target="_blank" rel="noopener">
+          <span class="bid">#40</span>
+          <span class="btitle">Give Yourself a Wedgie 🩲</span>
+          <span class="bpool">$47.88</span>
+        </a>
+
+      </div>
+
+      <div class="board-chain">
+        <h3>Base</h3>
+        <span class="note">96 open bounties</span>
+      </div>
+      <div class="board-list">
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1377" target="_blank" rel="noopener">
+          <span class="bid">#1377</span>
+          <span class="btitle">That Poetry Guy Fights Cancer</span>
+          <span class="bpool">$615.14</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1190" target="_blank" rel="noopener">
+          <span class="bid">#1190</span>
+          <span class="btitle">Interview a Politician About Crypto for The /politics Network</span>
+          <span class="bpool">$201.59</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1461" target="_blank" rel="noopener">
+          <span class="bid">#1461</span>
+          <span class="btitle">Show Tacit in Action 🤫</span>
+          <span class="bpool">$118.51</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/993" target="_blank" rel="noopener">
+          <span class="bid">#993</span>
+          <span class="btitle">hit it grip it and rip it 😤🏌️</span>
+          <span class="bpool">$92.89</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1422" target="_blank" rel="noopener">
+          <span class="bid">#1422</span>
+          <span class="btitle">Make Kenny reply to/endorse a $Poidhyz token fairly launched on Clanker</span>
+          <span class="bpool">$71.82</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1062" target="_blank" rel="noopener">
+          <span class="bid">#1062</span>
+          <span class="btitle">smokingfrog tattoos POIDH</span>
+          <span class="bpool">$63.90</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1192" target="_blank" rel="noopener">
+          <span class="bid">#1192</span>
+          <span class="btitle">Help Fund A Theoretical Neuroscience Paper</span>
+          <span class="bpool">$46.69</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1407" target="_blank" rel="noopener">
+          <span class="bid">#1407</span>
+          <span class="btitle">Match me with a founder/team (+1 week bonus)</span>
+          <span class="bpool">$35.91</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1374" target="_blank" rel="noopener">
+          <span class="bid">#1374</span>
+          <span class="btitle">The Road to Flag #150 🚩 A Flag Story &amp; Guessing Bounty</span>
+          <span class="bpool">$34.24</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1480" target="_blank" rel="noopener">
+          <span class="bid">#1480</span>
+          <span class="btitle">Ask BOAR where there is no signal</span>
+          <span class="bpool">$34.00</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1145" target="_blank" rel="noopener">
+          <span class="bid">#1145</span>
+          <span class="btitle">Engage with our video on X</span>
+          <span class="bpool">$32.32</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1490" target="_blank" rel="noopener">
+          <span class="bid">#1490</span>
+          <span class="btitle">Post and fund a real task on Verdikta Bounties (≥0.0041 ETH), get it judged, pub</span>
+          <span class="bpool">$29.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1489" target="_blank" rel="noopener">
+          <span class="bid">#1489</span>
+          <span class="btitle">Post and fund a real task on Verdikta Bounties (≥0.0041 ETH), get it judged, pub</span>
+          <span class="bpool">$29.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1488" target="_blank" rel="noopener">
+          <span class="bid">#1488</span>
+          <span class="btitle">Post and fund a real task on Verdikta Bounties (≥0.0041 ETH), get it judged, pub</span>
+          <span class="bpool">$29.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1487" target="_blank" rel="noopener">
+          <span class="bid">#1487</span>
+          <span class="btitle">Post and fund a real task on Verdikta Bounties (≥0.0041 ETH), get it judged, pub</span>
+          <span class="bpool">$29.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1093" target="_blank" rel="noopener">
+          <span class="bid">#1093</span>
+          <span class="btitle">Farcaster - The Movie (Trailer)</span>
+          <span class="bpool">$29.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1108" target="_blank" rel="noopener">
+          <span class="bid">#1108</span>
+          <span class="btitle">Win $10 in Among Traitors</span>
+          <span class="bpool">$29.21</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1106" target="_blank" rel="noopener">
+          <span class="bid">#1106</span>
+          <span class="btitle">Battle for the Bronx</span>
+          <span class="bpool">$29.21</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1051" target="_blank" rel="noopener">
+          <span class="bid">#1051</span>
+          <span class="btitle">Brian Armstrong tries poidh 📸</span>
+          <span class="bpool">$28.73</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1453" target="_blank" rel="noopener">
+          <span class="bid">#1453</span>
+          <span class="btitle">ZAOstock Round 7 - Run A Bounty For ZAOstock</span>
+          <span class="bpool">$27.53</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1405" target="_blank" rel="noopener">
+          <span class="bid">#1405</span>
+          <span class="btitle">Build the BEST Offline Ai Research App for IOS 🍏</span>
+          <span class="bpool">$27.00</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1493" target="_blank" rel="noopener">
+          <span class="bid">#1493</span>
+          <span class="btitle">Share your weekend with us on Collective Memory</span>
+          <span class="bpool">$25.62</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1481" target="_blank" rel="noopener">
+          <span class="bid">#1481</span>
+          <span class="btitle">clip &amp; remix the poidh lore space with Zaal 🎙️</span>
+          <span class="bpool">$23.46</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1372" target="_blank" rel="noopener">
+          <span class="bid">#1372</span>
+          <span class="btitle">Give old &quot;mining&quot; hardware a new life with PiLoader</span>
+          <span class="bpool">$23.22</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1482" target="_blank" rel="noopener">
+          <span class="bid">#1482</span>
+          <span class="btitle">Make the case for private AI</span>
+          <span class="bpool">$19.63</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1048" target="_blank" rel="noopener">
+          <span class="bid">#1048</span>
+          <span class="btitle">Joseph do a kickflip</span>
+          <span class="bpool">$19.15</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1485" target="_blank" rel="noopener">
+          <span class="bid">#1485</span>
+          <span class="btitle">poidh as Freedom Tech</span>
+          <span class="bpool">$15.56</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1074" target="_blank" rel="noopener">
+          <span class="bid">#1074</span>
+          <span class="btitle">Coral Health Restoration Snapshot</span>
+          <span class="bpool">$15.56</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1073" target="_blank" rel="noopener">
+          <span class="bid">#1073</span>
+          <span class="btitle">Coral Health Survey Snapshot</span>
+          <span class="bpool">$15.56</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1071" target="_blank" rel="noopener">
+          <span class="bid">#1071</span>
+          <span class="btitle">Reef Debris Cleanup</span>
+          <span class="bpool">$15.56</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1463" target="_blank" rel="noopener">
+          <span class="bid">#1463</span>
+          <span class="btitle">October poem for poidh — 10 stanzas</span>
+          <span class="bpool">$14.36</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1078" target="_blank" rel="noopener">
+          <span class="bid">#1078</span>
+          <span class="btitle">Debris Eco-Art</span>
+          <span class="bpool">$12.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1077" target="_blank" rel="noopener">
+          <span class="bid">#1077</span>
+          <span class="btitle">Reef Threat Edu Video</span>
+          <span class="bpool">$12.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1076" target="_blank" rel="noopener">
+          <span class="bid">#1076</span>
+          <span class="btitle">Group Cleanup Proof</span>
+          <span class="bpool">$12.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1075" target="_blank" rel="noopener">
+          <span class="bid">#1075</span>
+          <span class="btitle">Coral Frag Plant</span>
+          <span class="bpool">$12.93</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1470" target="_blank" rel="noopener">
+          <span class="bid">#1470</span>
+          <span class="btitle">Find a face in something that isn&#x27;t one 👀</span>
+          <span class="bpool">$11.49</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1479" target="_blank" rel="noopener">
+          <span class="bid">#1479</span>
+          <span class="btitle">Join the Olive Assembly 🫒</span>
+          <span class="bpool">$11.25</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1455" target="_blank" rel="noopener">
+          <span class="bid">#1455</span>
+          <span class="btitle">Share your digital street music performance</span>
+          <span class="bpool">$10.77</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1447" target="_blank" rel="noopener">
+          <span class="bid">#1447</span>
+          <span class="btitle">A pencil sketch of your face.</span>
+          <span class="bpool">$10.29</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1289" target="_blank" rel="noopener">
+          <span class="bid">#1289</span>
+          <span class="btitle">MIKOS32 NEEDS A LITTLE HELP</span>
+          <span class="bpool">$9.58</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1494" target="_blank" rel="noopener">
+          <span class="bid">#1494</span>
+          <span class="btitle">$MEAT Weekend Game Challenge 🥩🎮</span>
+          <span class="bpool">$9.10</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1096" target="_blank" rel="noopener">
+          <span class="bid">#1096</span>
+          <span class="btitle">Preach POIDH &amp; We Them Media</span>
+          <span class="bpool">$8.14</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1491" target="_blank" rel="noopener">
+          <span class="bid">#1491</span>
+          <span class="btitle">🌱 take a pic touching grass</span>
+          <span class="bpool">$7.90</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1445" target="_blank" rel="noopener">
+          <span class="bid">#1445</span>
+          <span class="btitle">Move from Moltbook (or another agent forum) to musemaxxing</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1444" target="_blank" rel="noopener">
+          <span class="bid">#1444</span>
+          <span class="btitle">Convince a Claude/Codex admin to switch to Muse and join musemaxxing</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1443" target="_blank" rel="noopener">
+          <span class="bid">#1443</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 20/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1442" target="_blank" rel="noopener">
+          <span class="bid">#1442</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 19/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1441" target="_blank" rel="noopener">
+          <span class="bid">#1441</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 18/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1440" target="_blank" rel="noopener">
+          <span class="bid">#1440</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 17/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1439" target="_blank" rel="noopener">
+          <span class="bid">#1439</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 16/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1438" target="_blank" rel="noopener">
+          <span class="bid">#1438</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 15/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1437" target="_blank" rel="noopener">
+          <span class="bid">#1437</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 14/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1436" target="_blank" rel="noopener">
+          <span class="bid">#1436</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 13/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1435" target="_blank" rel="noopener">
+          <span class="bid">#1435</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 12/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1434" target="_blank" rel="noopener">
+          <span class="bid">#1434</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 11/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1433" target="_blank" rel="noopener">
+          <span class="bid">#1433</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 10/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1432" target="_blank" rel="noopener">
+          <span class="bid">#1432</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 9/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1431" target="_blank" rel="noopener">
+          <span class="bid">#1431</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 8/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1430" target="_blank" rel="noopener">
+          <span class="bid">#1430</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 7/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1429" target="_blank" rel="noopener">
+          <span class="bid">#1429</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 6/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1428" target="_blank" rel="noopener">
+          <span class="bid">#1428</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 5/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1427" target="_blank" rel="noopener">
+          <span class="bid">#1427</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 4/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1426" target="_blank" rel="noopener">
+          <span class="bid">#1426</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 3/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1425" target="_blank" rel="noopener">
+          <span class="bid">#1425</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 2/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1424" target="_blank" rel="noopener">
+          <span class="bid">#1424</span>
+          <span class="btitle">Recruit a verified Muse agent to musemaxxing (slot 1/20)</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1365" target="_blank" rel="noopener">
+          <span class="bid">#1365</span>
+          <span class="btitle">Help fund a CAMRT tutor + reading tablet for Offor Precious Chinemerem</span>
+          <span class="bpool">$7.18</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1398" target="_blank" rel="noopener">
+          <span class="bid">#1398</span>
+          <span class="btitle">find an isuzu vehicross in the wild 🚙</span>
+          <span class="bpool">$5.99</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1352" target="_blank" rel="noopener">
+          <span class="bid">#1352</span>
+          <span class="btitle">Remake a poidh claim</span>
+          <span class="bpool">$5.99</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1478" target="_blank" rel="noopener">
+          <span class="bid">#1478</span>
+          <span class="btitle">go to a public talk</span>
+          <span class="bpool">$5.27</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1476" target="_blank" rel="noopener">
+          <span class="bid">#1476</span>
+          <span class="btitle">go to an art show</span>
+          <span class="bpool">$5.27</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1475" target="_blank" rel="noopener">
+          <span class="bid">#1475</span>
+          <span class="btitle">go to a concert</span>
+          <span class="bpool">$5.27</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1355" target="_blank" rel="noopener">
+          <span class="bid">#1355</span>
+          <span class="btitle">take a pic of this mug IRL</span>
+          <span class="bpool">$5.27</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1492" target="_blank" rel="noopener">
+          <span class="bid">#1492</span>
+          <span class="btitle">The Most Unnecessary Proof 🏆</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1458" target="_blank" rel="noopener">
+          <span class="bid">#1458</span>
+          <span class="btitle">Atikh tries the new upload flow</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1324" target="_blank" rel="noopener">
+          <span class="bid">#1324</span>
+          <span class="btitle">test2</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1237" target="_blank" rel="noopener">
+          <span class="bid">#1237</span>
+          <span class="btitle">make a split</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1236" target="_blank" rel="noopener">
+          <span class="bid">#1236</span>
+          <span class="btitle">make a split</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1235" target="_blank" rel="noopener">
+          <span class="bid">#1235</span>
+          <span class="btitle">Test bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1233" target="_blank" rel="noopener">
+          <span class="bid">#1233</span>
+          <span class="btitle">Test bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1232" target="_blank" rel="noopener">
+          <span class="bid">#1232</span>
+          <span class="btitle">Test bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1231" target="_blank" rel="noopener">
+          <span class="bid">#1231</span>
+          <span class="btitle">Test bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1223" target="_blank" rel="noopener">
+          <span class="bid">#1223</span>
+          <span class="btitle">Share $Space on X with screenshot — $5</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1222" target="_blank" rel="noopener">
+          <span class="bid">#1222</span>
+          <span class="btitle">Share $Space on X with screenshot — $5</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1219" target="_blank" rel="noopener">
+          <span class="bid">#1219</span>
+          <span class="btitle">Share $Space on X with screenshot — $5</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1216" target="_blank" rel="noopener">
+          <span class="bid">#1216</span>
+          <span class="btitle">Share $Space on X with screenshot — $5</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1215" target="_blank" rel="noopener">
+          <span class="bid">#1215</span>
+          <span class="btitle">Share $Space on X with screenshot — $5</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1209" target="_blank" rel="noopener">
+          <span class="bid">#1209</span>
+          <span class="btitle">Share $Space on X with screenshot — $5</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1116" target="_blank" rel="noopener">
+          <span class="bid">#1116</span>
+          <span class="btitle">Random Act of Kindness - IRL Photo Bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1114" target="_blank" rel="noopener">
+          <span class="bid">#1114</span>
+          <span class="btitle">Random Act of Kindness - IRL Photo Bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1113" target="_blank" rel="noopener">
+          <span class="bid">#1113</span>
+          <span class="btitle">Random Act of Kindness - IRL Photo Bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1097" target="_blank" rel="noopener">
+          <span class="bid">#1097</span>
+          <span class="btitle">The Hydration Check</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1045" target="_blank" rel="noopener">
+          <span class="bid">#1045</span>
+          <span class="btitle">Make a Bounty</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1037" target="_blank" rel="noopener">
+          <span class="bid">#1037</span>
+          <span class="btitle">test</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/999" target="_blank" rel="noopener">
+          <span class="bid">#999</span>
+          <span class="btitle">Ramus Grove Stewardship</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/998" target="_blank" rel="noopener">
+          <span class="bid">#998</span>
+          <span class="btitle">Ramus Grove Stewardship</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/997" target="_blank" rel="noopener">
+          <span class="bid">#997</span>
+          <span class="btitle">Clean a local green space</span>
+          <span class="bpool">$2.39</span>
+        </a>
+
+      </div>
+
+      <div class="board-chain">
+        <h3>Arbitrum</h3>
+        <span class="note">10 open bounties</span>
+      </div>
+      <div class="board-list">
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/319" target="_blank" rel="noopener">
+          <span class="bid">#319</span>
+          <span class="btitle">maja does chatgpt poetry</span>
+          <span class="bpool">$98.88</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/235" target="_blank" rel="noopener">
+          <span class="bid">#235</span>
+          <span class="btitle">impossible late flip for poidh 🛹</span>
+          <span class="bpool">$55.06</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/335" target="_blank" rel="noopener">
+          <span class="bid">#335</span>
+          <span class="btitle">Teach Someone Bitcoin and Inflation: The One Question Bounty</span>
+          <span class="bpool">$26.57</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/296" target="_blank" rel="noopener">
+          <span class="bid">#296</span>
+          <span class="btitle">get out in a forest 🌲🌳🌴🍁</span>
+          <span class="bpool">$17.96</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/295" target="_blank" rel="noopener">
+          <span class="bid">#295</span>
+          <span class="btitle">Highlight A Business That Gives Back 🏬</span>
+          <span class="bpool">$16.76</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/224" target="_blank" rel="noopener">
+          <span class="bid">#224</span>
+          <span class="btitle">Germany verified 🇩🇪</span>
+          <span class="bpool">$10.53</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/223" target="_blank" rel="noopener">
+          <span class="bid">#223</span>
+          <span class="btitle">Japan verified 🇯🇵</span>
+          <span class="bpool">$10.53</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/222" target="_blank" rel="noopener">
+          <span class="bid">#222</span>
+          <span class="btitle">Mexico verified 🇲🇽</span>
+          <span class="bpool">$10.53</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/305" target="_blank" rel="noopener">
+          <span class="bid">#305</span>
+          <span class="btitle">#busch4busch</span>
+          <span class="bpool">$7.90</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/287" target="_blank" rel="noopener">
+          <span class="bid">#287</span>
+          <span class="btitle">Onchaindare</span>
+          <span class="bpool">$4.79</span>
+        </a>
+
+      </div>
+
+
+      <div class="section-head chain board-head" id="closed">
+        <h2>Closed bounties</h2>
+        <span class="note">1,533 closed all-time · 90 most recent shown · Oct 18, 2026</span>
+      </div>
+      <p class="board-intro">
+        poidh has <strong>1,533 closed bounties</strong> across its history — Base 1,198 · Arbitrum 302 ·
+        Ethereum Mainnet 33. Below are the 30 most recent per chain (90 rows), pulled from poidh's official
+        indexer API (indexer.poidh.xyz) on Oct 18, 2026. Rows tagged "Canceled" were canceled before
+        completion; every other row is a completed, finished bounty.
+      </p>
+
+      <div class="board-chain">
+        <h3>Ethereum Mainnet</h3>
+        <span class="note">30 most recent · 33 closed in total</span>
+      </div>
+      <div class="board-list">
+
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/36" target="_blank" rel="noopener">
+          <span class="bid">#36</span>
+          <span class="btitle">GlazeCorp Public Humiliation Ritual 001</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.1000 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/33" target="_blank" rel="noopener">
+          <span class="bid">#33</span>
+          <span class="btitle">FIRST-TIME CHANCEDB.com AGENT TESTERS</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0028 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/32" target="_blank" rel="noopener">
+          <span class="bid">#32</span>
+          <span class="btitle">More positive vibes on the timeline please</span>
+          <span class="bpool">0.0107 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/30" target="_blank" rel="noopener">
+          <span class="bid">#30</span>
+          <span class="btitle">Create a Pixel-Art Setting for Final Whistle with Split &amp; Peel</span>
+          <span class="bpool">0.0093 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/29" target="_blank" rel="noopener">
+          <span class="bid">#29</span>
+          <span class="btitle">Who's Got the Nerdiest Don't F With Me Face?</span>
+          <span class="bpool">0.0082 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/27" target="_blank" rel="noopener">
+          <span class="bid">#27</span>
+          <span class="btitle">Clip the V2 DAO Collective Sensemaking Call ✂️</span>
+          <span class="bpool">0.0044 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/26" target="_blank" rel="noopener">
+          <span class="bid">#26</span>
+          <span class="btitle">Best Bounty (September 2026) 🏆</span>
+          <span class="bpool">0.0440 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/25" target="_blank" rel="noopener">
+          <span class="bid">#25</span>
+          <span class="btitle">claim this bounty on poidh.wei.limo</span>
+          <span class="bpool">0.0022 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/24" target="_blank" rel="noopener">
+          <span class="bid">#24</span>
+          <span class="btitle">Build a CELL hardware wallet from scratch and sign with it</span>
+          <span class="bpool">1.0000 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/23" target="_blank" rel="noopener">
+          <span class="bid">#23</span>
+          <span class="btitle">Go To Church</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0113 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/22" target="_blank" rel="noopener">
+          <span class="bid">#22</span>
+          <span class="btitle">local ai challenge: AI image detector for Chrome</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0300 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/21" target="_blank" rel="noopener">
+          <span class="bid">#21</span>
+          <span class="btitle">Warplets URL -&gt; IRL</span>
+          <span class="bpool">0.0845 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/20" target="_blank" rel="noopener">
+          <span class="bid">#20</span>
+          <span class="btitle">Best Bounty (August 2026) 🏆</span>
+          <span class="bpool">0.0600 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/19" target="_blank" rel="noopener">
+          <span class="bid">#19</span>
+          <span class="btitle">find an "11" for Ethereum</span>
+          <span class="bpool">0.0110 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/18" target="_blank" rel="noopener">
+          <span class="bid">#18</span>
+          <span class="btitle">find the doodad easter egg</span>
+          <span class="bpool">0.0220 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/17" target="_blank" rel="noopener">
+          <span class="bid">#17</span>
+          <span class="btitle">Deploy Shutter PEN on Ethereum Mainnet</span>
+          <span class="bpool">0.0245 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/16" target="_blank" rel="noopener">
+          <span class="bid">#16</span>
+          <span class="btitle">Warm Intro to a Crypto VC</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0670 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/15" target="_blank" rel="noopener">
+          <span class="bid">#15</span>
+          <span class="btitle">Find Vitalik's anonymous Ethereum document</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0610 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/14" target="_blank" rel="noopener">
+          <span class="bid">#14</span>
+          <span class="btitle">This Is For Farcaster</span>
+          <span class="bpool">0.0160 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/13" target="_blank" rel="noopener">
+          <span class="bid">#13</span>
+          <span class="btitle">Ethereum Changed My Mind</span>
+          <span class="bpool">0.0043 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/12" target="_blank" rel="noopener">
+          <span class="bid">#12</span>
+          <span class="btitle">This is for Mainnet.</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0012 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/11" target="_blank" rel="noopener">
+          <span class="bid">#11</span>
+          <span class="btitle">Encrypt The Mempool! - Provide feedback on the draft EIPs</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">3.0764 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/10" target="_blank" rel="noopener">
+          <span class="bid">#10</span>
+          <span class="btitle">Farcaster vs Crypto DAU: What's the Real Story?</span>
+          <span class="bpool">0.0155 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/9" target="_blank" rel="noopener">
+          <span class="bid">#9</span>
+          <span class="btitle">Encrypt The Mempool! - Provide feedback on the draft EIPs</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">3.0160 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/8" target="_blank" rel="noopener">
+          <span class="bid">#8</span>
+          <span class="btitle">Encrypt The Mempool! - Provide feedback on the draft EIPs (8105 &amp; 8184)</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">3.0000 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/7" target="_blank" rel="noopener">
+          <span class="bid">#7</span>
+          <span class="btitle">Film the machines at Vplus Laundry, Hanoi</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0088 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/6" target="_blank" rel="noopener">
+          <span class="bid">#6</span>
+          <span class="btitle">🏆 Best Mainnet Bounty (June 2026)</span>
+          <span class="bpool">0.0580 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/5" target="_blank" rel="noopener">
+          <span class="bid">#5</span>
+          <span class="btitle">Ethereum in the World 🌍 🌎 🌏</span>
+          <span class="bpool">0.0150 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/4" target="_blank" rel="noopener">
+          <span class="bid">#4</span>
+          <span class="btitle">Do you have good $morals?</span>
+          <span class="bpool">0.0130 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/mainnet/bounty/3" target="_blank" rel="noopener">
+          <span class="bid">#3</span>
+          <span class="btitle">Pizza or It Didn't Happen 🍕📸</span>
+          <span class="bpool">0.0077 ETH</span>
+        </a>
+
+
+      </div>
+
+      <div class="board-chain">
+        <h3>Base</h3>
+        <span class="note">30 most recent · 1,198 closed in total</span>
+      </div>
+      <div class="board-list">
+
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1486" target="_blank" rel="noopener">
+          <span class="bid">#1486</span>
+          <span class="btitle">find Phil Flash in Seattle 🎨</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0088 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1484" target="_blank" rel="noopener">
+          <span class="bid">#1484</span>
+          <span class="btitle">Omar's agent claims a bounty</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1483" target="_blank" rel="noopener">
+          <span class="bid">#1483</span>
+          <span class="btitle">Play Exit Left</span>
+          <span class="bpool">0.0032 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1477" target="_blank" rel="noopener">
+          <span class="bid">#1477</span>
+          <span class="btitle">go to a museum</span>
+          <span class="bpool">0.0022 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1474" target="_blank" rel="noopener">
+          <span class="bid">#1474</span>
+          <span class="btitle">go to a sports event in your area</span>
+          <span class="bpool">0.0022 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1473" target="_blank" rel="noopener">
+          <span class="bid">#1473</span>
+          <span class="btitle">help me pay hospital surgery</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1472" target="_blank" rel="noopener">
+          <span class="bid">#1472</span>
+          <span class="btitle">Mint and share a BUST PROJECT portrait</span>
+          <span class="bpool">0.0133 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1471" target="_blank" rel="noopener">
+          <span class="bid">#1471</span>
+          <span class="btitle">Plant a Sprout</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0057 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1469" target="_blank" rel="noopener">
+          <span class="bid">#1469</span>
+          <span class="btitle">Find a face in something that isn't one 👀</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1468" target="_blank" rel="noopener">
+          <span class="bid">#1468</span>
+          <span class="btitle">beat the bots: mine a botBTC block</span>
+          <span class="bpool">0.0030 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1467" target="_blank" rel="noopener">
+          <span class="bid">#1467</span>
+          <span class="btitle">Meme Competition: Awards Paid in META Stock</span>
+          <span class="bpool">0.0535 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1466" target="_blank" rel="noopener">
+          <span class="bid">#1466</span>
+          <span class="btitle">share your basefriend key purchase</span>
+          <span class="bpool">0.0036 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1465" target="_blank" rel="noopener">
+          <span class="bid">#1465</span>
+          <span class="btitle">test staging.poidh.xyz</span>
+          <span class="bpool">0.0020 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1464" target="_blank" rel="noopener">
+          <span class="bid">#1464</span>
+          <span class="btitle">Gift a fren some stock 🎁</span>
+          <span class="bpool">0.0123 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1462" target="_blank" rel="noopener">
+          <span class="bid">#1462</span>
+          <span class="btitle">Best dance TikTok video.</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0019 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1460" target="_blank" rel="noopener">
+          <span class="bid">#1460</span>
+          <span class="btitle">ZAOstock Round 8 - Cut The Radio Session For Instagram</span>
+          <span class="bpool">0.0224 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1459" target="_blank" rel="noopener">
+          <span class="bid">#1459</span>
+          <span class="btitle">Show us where you watched ZAOstock from 📺</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1457" target="_blank" rel="noopener">
+          <span class="bid">#1457</span>
+          <span class="btitle">Chase claims a bounty with no gas</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1456" target="_blank" rel="noopener">
+          <span class="bid">#1456</span>
+          <span class="btitle">Bring Snowmoon to Life</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0050 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1454" target="_blank" rel="noopener">
+          <span class="bid">#1454</span>
+          <span class="btitle">test bounty</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1452" target="_blank" rel="noopener">
+          <span class="bid">#1452</span>
+          <span class="btitle">upload a real pic you took outside 🖼️</span>
+          <span class="bpool">0.0022 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1451" target="_blank" rel="noopener">
+          <span class="bid">#1451</span>
+          <span class="btitle">best AI agent wallet setup feedback</span>
+          <span class="bpool">0.0020 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1450" target="_blank" rel="noopener">
+          <span class="bid">#1450</span>
+          <span class="btitle">Bulls &amp; Cows Agent Lab: Tester Call</span>
+          <span class="bpool">0.0019 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1449" target="_blank" rel="noopener">
+          <span class="bid">#1449</span>
+          <span class="btitle">blohard: exercise your account keys!</span>
+          <span class="bpool">0.0520 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1448" target="_blank" rel="noopener">
+          <span class="bid">#1448</span>
+          <span class="btitle">comment on this bounty page</span>
+          <span class="bpool">0.0040 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1446" target="_blank" rel="noopener">
+          <span class="bid">#1446</span>
+          <span class="btitle">Zaostock event</span>
+          <span class="bpool">0.0115 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1423" target="_blank" rel="noopener">
+          <span class="bid">#1423</span>
+          <span class="btitle">Trench</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0075 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1421" target="_blank" rel="noopener">
+          <span class="bid">#1421</span>
+          <span class="btitle">ZAOstock Round 5 - Ship Code, Not A Poster</span>
+          <span class="bpool">0.0050 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1420" target="_blank" rel="noopener">
+          <span class="bid">#1420</span>
+          <span class="btitle">CHANCEDB.COM AGENT TESTERS WANTED</span>
+          <span class="bpool">0.0034 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/base/bounty/1419" target="_blank" rel="noopener">
+          <span class="bid">#1419</span>
+          <span class="btitle">best poidh AI cartoon story 🎬</span>
+          <span class="bpool">0.0057 ETH</span>
+        </a>
+
+
+      </div>
+
+      <div class="board-chain">
+        <h3>Arbitrum</h3>
+        <span class="note">30 most recent · 302 closed in total</span>
+      </div>
+      <div class="board-list">
+
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/334" target="_blank" rel="noopener">
+          <span class="bid">#334</span>
+          <span class="btitle">claim this bounty without gas</span>
+          <span class="bpool">0.0015 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/333" target="_blank" rel="noopener">
+          <span class="bid">#333</span>
+          <span class="btitle">Chase claims a bounty with no gas</span>
+          <span class="bpool">0.0010 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/332" target="_blank" rel="noopener">
+          <span class="bid">#332</span>
+          <span class="btitle">implement zerodev</span>
+          <span class="bpool">0.0400 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/331" target="_blank" rel="noopener">
+          <span class="bid">#331</span>
+          <span class="btitle">upload a claim, any claim 📸</span>
+          <span class="bpool">0.0022 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/330" target="_blank" rel="noopener">
+          <span class="bid">#330</span>
+          <span class="btitle">Clip the V2 DAO Collective Sensemaking Call ✂️</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0044 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/329" target="_blank" rel="noopener">
+          <span class="bid">#329</span>
+          <span class="btitle">Feedback for FreeToken</span>
+          <span class="bpool">0.0065 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/328" target="_blank" rel="noopener">
+          <span class="bid">#328</span>
+          <span class="btitle">DeepSeek-V4-Flash KLD parity measurement</span>
+          <span class="bpool">0.0400 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/327" target="_blank" rel="noopener">
+          <span class="bid">#327</span>
+          <span class="btitle">Correct Terminal-Bench 2.1 run for DeepSeek-V4-Flash</span>
+          <span class="bpool">0.1600 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/326" target="_blank" rel="noopener">
+          <span class="bid">#326</span>
+          <span class="btitle">Art, Coffee &amp; Farcaster ☕️🟣</span>
+          <span class="bpool">0.0245 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/325" target="_blank" rel="noopener">
+          <span class="bid">#325</span>
+          <span class="btitle">Test Sieve and Give Us Feedback</span>
+          <span class="bpool">0.0210 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/324" target="_blank" rel="noopener">
+          <span class="bid">#324</span>
+          <span class="btitle">find a ~30 year old textbook that beats Pangram</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0277 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/323" target="_blank" rel="noopener">
+          <span class="bid">#323</span>
+          <span class="btitle">local AI challenge: AI image detector for Chrome</span>
+          <span class="bpool">1.3735 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/322" target="_blank" rel="noopener">
+          <span class="bid">#322</span>
+          <span class="btitle">"this is for poidh" highlight video</span>
+          <span class="bpool">0.0300 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/321" target="_blank" rel="noopener">
+          <span class="bid">#321</span>
+          <span class="btitle">Build a ship in a bottle</span>
+          <span class="bpool">0.0044 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/320" target="_blank" rel="noopener">
+          <span class="bid">#320</span>
+          <span class="btitle">Best Clips From Coordination in 2026</span>
+          <span class="bpool">0.0180 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/318" target="_blank" rel="noopener">
+          <span class="bid">#318</span>
+          <span class="btitle">maja does ChatGPT poetry</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0333 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/317" target="_blank" rel="noopener">
+          <span class="bid">#317</span>
+          <span class="btitle">🍽️ Cook Your Grandma's Signature Dish</span>
+          <span class="bpool">0.0110 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/316" target="_blank" rel="noopener">
+          <span class="bid">#316</span>
+          <span class="btitle">claim me with a .gwei name</span>
+          <span class="bpool">0.0030 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/315" target="_blank" rel="noopener">
+          <span class="bid">#315</span>
+          <span class="btitle">Ben gets a pic at Rodeo Dunes 🐎</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0033 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/314" target="_blank" rel="noopener">
+          <span class="bid">#314</span>
+          <span class="btitle">guess my beer 🍺</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0043 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/313" target="_blank" rel="noopener">
+          <span class="bid">#313</span>
+          <span class="btitle">best clip from poidh x FounderCheck x Farcaster Batches</span>
+          <span class="bpool">0.0145 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/312" target="_blank" rel="noopener">
+          <span class="bid">#312</span>
+          <span class="btitle">poidh mentioned 👀</span>
+          <span class="bpool">0.0025 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/311" target="_blank" rel="noopener">
+          <span class="bid">#311</span>
+          <span class="btitle">test</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0020 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/310" target="_blank" rel="noopener">
+          <span class="bid">#310</span>
+          <span class="btitle">Bigger Red Flag: AI Lover or Crypto Trader? 🚩</span>
+          <span class="bpool">0.0125 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/309" target="_blank" rel="noopener">
+          <span class="bid">#309</span>
+          <span class="btitle">attend the Seattle pizza party 🍕</span>
+          <span class="bpool">0.0025 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/308" target="_blank" rel="noopener">
+          <span class="bid">#308</span>
+          <span class="btitle">attend the Seattle pizza party 🍕</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0025 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/307" target="_blank" rel="noopener">
+          <span class="bid">#307</span>
+          <span class="btitle">attend the Seattle pizza party 🍕</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0025 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/306" target="_blank" rel="noopener">
+          <span class="bid">#306</span>
+          <span class="btitle">attend the Seattle pizza party 🍕</span>
+          <span class="btag canceled">Canceled</span>
+          <span class="bpool">0.0025 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/304" target="_blank" rel="noopener">
+          <span class="bid">#304</span>
+          <span class="btitle">OOTD Bounty 👕🔥</span>
+          <span class="bpool">0.0035 ETH</span>
+        </a>
+
+        <a class="brow" href="https://poidh.xyz/arbitrum/bounty/303" target="_blank" rel="noopener">
+          <span class="bid">#303</span>
+          <span class="btitle">best GM Farcaster clip 🎦</span>
+          <span class="bpool">0.0246 ETH</span>
+        </a>
+
+
+      </div>
+
+      <footer>
+        <div class="honesty">
+          <strong>Stated exactly as it stands.</strong>
+          Every status above was checked live on poidh on Oct 18, 2026.
+        </div>
+        <div class="foot-row">
+          <span>HDR · hdrapp.tech</span>
+          <div class="socials">
+            <a href="https://x.com/Hdr284" target="_blank" rel="noopener">X · @Hdr284</a>
+            <a href="https://github.com/hdr2804" target="_blank" rel="noopener">GitHub · hdr2804</a>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+
+
+
+    <script>
+      (function () {
+        var LOGOS = {
+          mainnet: '<svg class="chain-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 1.5 5 12.6l7 3.8z" fill="#627EEA"/><path d="M12 1.5v14.9l7-3.8z" fill="#627EEA" fill-opacity=".55"/><path d="M12 22.5v-5.4l-7-3.3z" fill="#627EEA" fill-opacity=".85"/><path d="M12 22.5v-5.4l7-3.3z" fill="#627EEA" fill-opacity=".4"/></svg>',
+          base: '<svg class="chain-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="10" fill="#0052FF"/><path d="M11.2 9.9h10.58a10 10 0 0 1 0 4.2H11.2z" fill="#fff"/></svg>',
+          arbitrum: '<svg class="chain-logo" viewBox="0 0 2500 2500" aria-hidden="true" focusable="false"><path fill="#213147" d="M226,760v980c0,63,33,120,88,152l849,490c54,31,121,31,175,0l849-490c54-31,88-89,88-152V760c0-63-33-120-88-152l-849-490c-54-31-121-31-175,0L314,608c-54,31-87,89-87,152H226z"/><path fill="#12AAFF" d="M1435,1440l-121,332c-3,9-3,19,0,29l208,571l241-139l-289-793C1467,1422,1442,1422,1435,1440z"/><path fill="#12AAFF" d="M1678,882c-7-18-32-18-39,0l-121,332c-3,9-3,19,0,29l341,935l241-139L1678,883V882z"/><path fill="#9DCCED" d="M1250,155c6,0,12,2,17,5l918,530c11,6,17,18,17,30v1060c0,12-7,24-17,30l-918,530c-5,3-11,5-17,5s-12-2-17-5l-918-530c-11-6-17-18-17-30V719c0-12,7-24,17-30l918-530c5-3,11-5,17-5l0,0V155z M1250,0c-33,0-65,8-95,25L237,555c-59,34-95,96-95,164v1060c0,68,36,130,95,164l918,530c29,17,62,25,95,25s65-8,95-25l918-530c59-34,95-96,95-164V719c0-68-36-130-95-164L1344,25c-29-17-62-25-95-25l0,0H1250z"/><polygon fill="#213147" points="642,2179 727,1947 897,2088 738,2234"/><path fill="#FFFFFF" d="M1172,644H939c-17,0-33,11-39,27L401,2039l241,139l550-1507c5-14-5-28-19-28L1172,644z"/><path fill="#FFFFFF" d="M1580,644h-233c-17,0-33,11-39,27L738,2233l241,139l620-1701c5-14-5-28-19-28V644z"/></svg>'
+        };
+
+        function chainOf(text) {
+          text = text.replace(/\s+/g, " ").trim().toLowerCase();
+          if (text.indexOf("ethereum") === 0) return "mainnet";
+          if (text === "base") return "base";
+          if (text === "arbitrum") return "arbitrum";
+          return null;
+        }
+
+        /* Group each chain heading with the content that follows it,
+           and put the chain's logo in the heading. */
+        var groups = [];
+        document.querySelectorAll(".section-head.chain, .board-chain").forEach(function (head) {
+          var title = head.querySelector("h2, h3");
+          if (!title) return;
+          var chain = chainOf(title.textContent);
+          if (!chain) return;
+          title.insertAdjacentHTML("afterbegin", LOGOS[chain]);
+          head.setAttribute("data-chain", chain);
+          var nodes = [head];
+          var sib = head.nextElementSibling;
+          while (
+            sib &&
+            !sib.classList.contains("section-head") &&
+            !sib.classList.contains("board-chain") &&
+            sib.tagName !== "FOOTER"
+          ) {
+            if (sib.classList.contains("board-list")) sib.setAttribute("data-chain", chain);
+            nodes.push(sib);
+            sib = sib.nextElementSibling;
+          }
+          groups.push({ chain: chain, nodes: nodes });
+        });
+
+        var tabs = document.querySelectorAll(".chain-tab");
+        function apply(chain) {
+          groups.forEach(function (g) {
+            var show = chain === "all" || g.chain === chain;
+            g.nodes.forEach(function (n) { n.style.display = show ? "" : "none"; });
+          });
+          tabs.forEach(function (t) {
+            var on = t.getAttribute("data-chain") === chain;
+            t.classList.toggle("is-active", on);
+            t.setAttribute("aria-pressed", on ? "true" : "false");
+          });
+        }
+        tabs.forEach(function (t) {
+          t.addEventListener("click", function () { apply(t.getAttribute("data-chain")); });
+        });
+      })();
+    </script>
+  </body>
+</html>
