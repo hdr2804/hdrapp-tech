@@ -180,7 +180,6 @@
       </div>
       <div class="hero-actions">
         <a class="btn primary" href="mailto:security@hdrapp.tech">Report / contact</a>
-        <a class="btn" href="#disclosures">Selected disclosures</a>
       </div>
     </div>
   </div>
@@ -250,67 +249,11 @@
     </div>
   </section>
 
-  <!-- DISCLOSURES -->
-  <section id="disclosures">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="sec-tag">03 — Selected disclosures</div>
-        <h2>Filed &amp; in review.</h2>
-        <p>A selection of reports submitted through public bug-bounty programs and direct vendor disclosure. Statuses are stated exactly as they stand.</p>
-      </div>
-      <div class="disc-list">
-
-        <div class="disc">
-          <div>
-            <h3>Relay <span class="venue">— Solana attestor accounting · direct disclosure</span></h3>
-            <p>The Solana attestation service credits the gross amount of Token-2022 deposits while the depository vault receives the net amount after the transfer fee — creating unbacked hub balances equal to the fee on every fee-bearing deposit. Proven end-to-end on a local validator and in Hub composition tests.</p>
-          </div>
-          <span class="chip review">SUBMITTED 2026-11-01 · UNDER REVIEW</span>
-        </div>
-
-        <div class="disc">
-          <div>
-            <h3>TAC <span class="venue">— cross-chain layer · direct disclosure</span></h3>
-            <p>Native assets unlocked by an inbound cross-chain message are stranded in the CrossChainLayer when the application call fails: the message is still marked processed and the funds have no recovery path. Proven locally; production impact quantified from a full on-chain event scan.</p>
-          </div>
-          <span class="chip review">SUBMITTED 2026-10-31 · AWAITING RESPONSE</span>
-        </div>
-
-        <div class="disc">
-          <div>
-            <h3>UltraDAG <span class="venue">— GitHub Security Advisory</span></h3>
-            <p>Adaptive quorum shrinkage in the consensus layer. Filed as <code>GHSA-9f6p-f86r-9rw4</code> with a working proof-of-concept.</p>
-          </div>
-          <span class="chip crit">CRITICAL · FILED</span>
-        </div>
-
-        <div class="disc">
-          <div>
-            <h3>Coinbase smart contracts <span class="venue">— via Cantina</span></h3>
-            <p>Three findings submitted against Coinbase protocol contracts, including unguarded-initializer issues in production token and balance-tracking components.</p>
-          </div>
-          <span class="chip filed">3 FINDINGS SUBMITTED</span>
-        </div>
-
-        <div class="disc">
-          <div>
-            <h3>Calyx (Aurora) <span class="venue">— via AuditOne</span></h3>
-            <p>Two findings in the Calyx launchpad contracts: a vesting-claim accounting fault and a permanent withdrawal lock, both proven in a local NEAR sandbox.</p>
-          </div>
-          <span class="chip filed">2 FINDINGS SUBMITTED · MEDIUM + HIGH</span>
-        </div>
-
-        <p class="disc-note">Additional reports are under review via Cantina, AuditOne, and direct vendor disclosure.</p>
-
-      </div>
-    </div>
-  </section>
-
   <!-- PROCESS -->
   <section id="process">
     <div class="wrap">
       <div class="sec-head">
-        <div class="sec-tag">04 — Process</div>
+        <div class="sec-tag">03 — Process</div>
         <h2>How every report is built.</h2>
       </div>
       <div class="steps">
@@ -342,7 +285,7 @@
   <section id="contact">
     <div class="wrap">
       <div class="sec-head">
-        <div class="sec-tag">05 — Contact</div>
+        <div class="sec-tag">04 — Contact</div>
         <h2>Reach me.</h2>
         <p>For disclosure coordination, program invitations, or questions about a report — email is fastest.</p>
       </div>
