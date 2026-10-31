@@ -144,24 +144,9 @@
   .term-body .dim{color:var(--dim)}
   .term-body .out{color:#ffb35c}
 
-  /* marquee */
-  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;overflow:hidden;position:relative;z-index:2;
-    mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-  .marquee-track{display:flex;gap:0;width:max-content;animation:scroll 30s linear infinite}
-  .marquee span{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;letter-spacing:2.6px;color:var(--dim);padding-right:14px;white-space:nowrap}
-  .marquee b{color:var(--acc1);font-weight:500}
-  @keyframes scroll{to{transform:translateX(-50%)}}
-  @media (prefers-reduced-motion:reduce){.marquee-track{animation:none}}
-
   /* ---------- sections ---------- */
   section{padding:96px 0;position:relative}
   .sec-head{margin-bottom:42px;position:relative}
-  .ghost-num{
-    position:absolute;top:-38px;right:0;z-index:-1;
-    font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(90px,14vw,150px);line-height:1;letter-spacing:-4px;
-    color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.06);user-select:none;pointer-events:none;
-  }
   .sec-tag{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;letter-spacing:2.6px;color:var(--acc1);text-transform:uppercase}
   .sec-tag::after{content:"";height:1px;width:72px;background:linear-gradient(90deg,rgba(255,122,26,.65),transparent)}
   h2{font-family:'Sora',sans-serif;font-size:clamp(32px,5vw,46px);font-weight:700;letter-spacing:-1px;margin-top:14px}
@@ -173,13 +158,10 @@
   .tile:hover{transform:translateY(-3px)}
   .tile-main{grid-column:span 3}
   .tile-facts{grid-column:span 1}
-  .tile-half{grid-column:span 2}
-  @media(max-width:900px){.tile-main,.tile-facts,.tile-half{grid-column:span 4}}
+  @media(max-width:900px){.tile-main,.tile-facts{grid-column:span 4}}
   .tile p{color:var(--muted);font-size:15.5px;position:relative}
   .tile p + p{margin-top:14px}
   .tile p strong{color:var(--txt)}
-  .tile .big{font-family:'Sora',sans-serif;font-size:21px;font-weight:700;color:var(--txt);letter-spacing:-.3px;line-height:1.35;position:relative}
-  .tile .lbl{font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:2px;color:var(--acc1);text-transform:uppercase;margin-bottom:12px;position:relative}
   .facts{list-style:none;position:relative}
   .facts li{padding:10px 0;border-bottom:1px dashed var(--line)}
   .facts li:first-child{padding-top:0}
@@ -229,19 +211,8 @@
   .pgp-note a:hover{text-decoration:underline}
 
   footer{padding:44px 0 0;position:relative;z-index:2}
-  .foot{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center;padding-bottom:30px}
+  .foot{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:center;align-items:center;padding-bottom:30px}
   .foot .l{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim)}
-  .foot .r{display:flex;gap:22px;font-size:13.5px;font-weight:600;color:var(--muted)}
-  .foot .r a{transition:color .15s ease}
-  .foot .r a:hover{color:var(--txt)}
-  .watermark{
-    font-family:'Sora',sans-serif;font-weight:800;text-align:center;line-height:.78;letter-spacing:-2px;
-    font-size:clamp(120px,26vw,300px);user-select:none;pointer-events:none;
-    color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.055);
-    mask-image:linear-gradient(180deg,#000 30%,transparent 92%);
-    -webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 92%);
-    margin-bottom:-.18em;
-  }
 </style>
 </head>
 <body>
@@ -286,19 +257,10 @@
     </div>
   </div>
 
-  <!-- MARQUEE -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      <span>EVM SMART CONTRACTS <b>·</b> SOLANA PROGRAMS <b>·</b> CROSS-CHAIN SETTLEMENT <b>·</b> DEFI ACCOUNTING <b>·</b> ORACLE &amp; ATTESTATION <b>·</b> POC-DRIVEN DISCLOSURE <b>·</b>&nbsp;</span>
-      <span>EVM SMART CONTRACTS <b>·</b> SOLANA PROGRAMS <b>·</b> CROSS-CHAIN SETTLEMENT <b>·</b> DEFI ACCOUNTING <b>·</b> ORACLE &amp; ATTESTATION <b>·</b> POC-DRIVEN DISCLOSURE <b>·</b>&nbsp;</span>
-    </div>
-  </div>
-
   <!-- ABOUT -->
   <section id="about">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="ghost-num">01</div>
         <div class="sec-tag">01 — About</div>
         <h2>Research, not checklists.</h2>
       </div>
@@ -318,16 +280,6 @@
             <li><span class="k">Email</span><span class="v">security@hdrapp.tech</span></li>
           </ul>
         </div>
-        <div class="tile tile-half glass spot reveal">
-          <div class="lbl">PoC-first</div>
-          <div class="big">No execution, no report.</div>
-          <p style="margin-top:10px">A hypothesis that cannot be executed locally is never submitted as a vulnerability.</p>
-        </div>
-        <div class="tile tile-half glass spot reveal">
-          <div class="lbl">Coordinated disclosure</div>
-          <div class="big">Private until it is fixed.</div>
-          <p style="margin-top:10px">Report details stay between me and the maintainer while a finding is under review.</p>
-        </div>
       </div>
     </div>
   </section>
@@ -336,7 +288,6 @@
   <section id="focus">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="ghost-num">02</div>
         <div class="sec-tag">02 — Focus areas</div>
         <h2>Where I look.</h2>
         <p>The recurring theme: places where two components disagree about the state of the world — and the disagreement is worth money.</p>
@@ -375,7 +326,6 @@
   <section id="process">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="ghost-num">03</div>
         <div class="sec-tag">03 — Process</div>
         <h2>How every report is built.</h2>
       </div>
@@ -408,7 +358,6 @@
   <section id="contact">
     <div class="wrap">
       <div class="sec-head reveal">
-        <div class="ghost-num">04</div>
         <div class="sec-tag">04 — Contact</div>
         <h2>Reach me.</h2>
         <p>For disclosure coordination, program invitations, or questions about a report — email is fastest.</p>
@@ -439,14 +388,9 @@
 <footer>
   <div class="wrap foot">
     <div class="l">© 2026 Hdr — hdrapp.tech</div>
-    <div class="r">
-      <a href="mailto:security@hdrapp.tech">Email</a>
-      <a href="https://github.com/hdr2804" target="_blank" rel="noopener">GitHub</a>
-      <a href="https://x.com/Hdr284" target="_blank" rel="noopener">X</a>
-      <a href="https://farcaster.xyz/hdr" target="_blank" rel="noopener">Farcaster</a>
-    </div>
+
   </div>
-  <div class="watermark" aria-hidden="true">HDR</div>
+
 </footer>
 
 <script>
