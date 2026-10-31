@@ -1,4 +1,11 @@
+# hdrapp.tech - security disclosure contact
+# Hdr / Independent security researcher
+# If you believe you have found a security issue affecting this domain,
+# please report it to the contact below. Reports are read in English and
+# Indonesian and handled under coordinated disclosure.
+
 Contact: mailto:security@hdrapp.tech
 Expires: 2027-11-01T00:00:00.000Z
 Preferred-Languages: en, id
 Canonical: https://www.hdrapp.tech/.well-known/security.txt
+Policy: https://www.hdrapp.tech/#process
