@@ -106,10 +106,13 @@
   @media (prefers-reduced-motion:reduce){.eyebrow .dot{animation:none}}
   h1{
     font-weight:700;
-    font-size:clamp(72px,14vw,132px);line-height:.98;letter-spacing:-2px;
-    margin:28px 0 14px;
+    font-size:clamp(58px,12.5vw,118px);line-height:1.05;letter-spacing:-2px;
+    margin:28px 0 14px;color:#dcffe6;
   }
-  h1 .grad{background:linear-gradient(94deg,var(--acc1) 10%,var(--acc2) 55%,var(--acc3) 105%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  h1 .prompt{color:var(--acc1)}
+  h1 .cursor{display:inline-block;width:.55em;height:.9em;background:var(--acc1);vertical-align:-.07em;margin-left:.14em;animation:blink 1.1s steps(1) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media (prefers-reduced-motion:reduce){h1 .cursor{animation:none}}
   .hero-role{font-size:clamp(21px,4vw,32px);font-weight:600;letter-spacing:-.4px;color:#a9f5c0}
   .hero-role .hl{background:linear-gradient(92deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero-sub{max-width:640px;margin:22px auto 0;color:var(--muted);font-size:17.5px}
@@ -238,7 +241,7 @@
   <header class="hero">
     <div class="wrap">
       <span class="eyebrow"><span class="dot"></span>INDEPENDENT SECURITY RESEARCHER</span>
-      <h1><span class="grad">Hdr</span>.</h1>
+      <h1 aria-label="Hdr"><span class="prompt" aria-hidden="true">$</span> <span aria-hidden="true">hdr</span><span class="cursor" aria-hidden="true"></span></h1>
       <div class="hero-role">Smart-contract &amp; <span class="hl">protocol security</span> research.</div>
       <p class="hero-sub">I audit Web3 protocols the way an attacker would read them — then prove every finding with a <strong>runnable proof-of-concept</strong> against pinned source before it is reported. <strong>Responsible disclosure, always.</strong></p>
 
