@@ -10,6 +10,11 @@
 <meta property="og:description" content="Smart-contract & protocol security research. Every finding validated with a runnable proof-of-concept before it is reported." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://www.hdrapp.tech/" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Hdr — Independent Security Researcher" />
+<meta name="twitter:description" content="Smart-contract & protocol security research. Every finding validated with a runnable proof-of-concept before it is reported." />
+<link rel="canonical" href="https://www.hdrapp.tech/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23020503'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='28' font-weight='700' fill='%2300ff41' text-anchor='middle'%3E%3E_%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
@@ -20,8 +25,8 @@
     --line:rgba(0,255,65,.13);
     --line-strong:rgba(0,255,65,.27);
     --txt:#c9ffd8;
-    --muted:#71b183;
-    --dim:#3f6f4e;
+    --muted:#82bd93;
+    --dim:#5f916e;
     --acc1:#00ff41;
     --acc2:#00cc33;
     --acc3:#00ffa3;
@@ -36,7 +41,7 @@
     font-size:15.5px;line-height:1.75;
     -webkit-font-smoothing:antialiased;overflow-x:hidden;
   }
-  ::selection{background:var(--acc2);color:#fff}
+  ::selection{background:var(--acc2);color:#021207}
   ::-webkit-scrollbar{width:10px}
   ::-webkit-scrollbar-thumb{background:#0c3318;border-radius:8px;border:2px solid var(--bg)}
   a{color:inherit;text-decoration:none}
@@ -92,7 +97,7 @@
   .hero{position:relative;padding:40px 0 36px;text-align:center}
   .eyebrow{
     display:inline-flex;align-items:center;gap:9px;
-    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:500;letter-spacing:2.2px;color:#4dff88;
+    font-size:11.5px;font-weight:500;letter-spacing:2.2px;color:#4dff88;
     border:1px solid rgba(0,255,65,.35);background:rgba(0,255,65,.07);
     padding:8px 16px;border-radius:999px;backdrop-filter:blur(8px);
   }
@@ -100,12 +105,12 @@
   @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
   @media (prefers-reduced-motion:reduce){.eyebrow .dot{animation:none}}
   h1{
-    font-family:'JetBrains Mono',monospace;font-weight:700;
-    font-size:clamp(76px,15.5vw,150px);line-height:.98;letter-spacing:-2px;
-    margin:34px 0 14px;
+    font-weight:700;
+    font-size:clamp(72px,14vw,132px);line-height:.98;letter-spacing:-2px;
+    margin:28px 0 14px;
   }
   h1 .grad{background:linear-gradient(94deg,var(--acc1) 10%,var(--acc2) 55%,var(--acc3) 105%);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero-role{font-family:'JetBrains Mono',monospace;font-size:clamp(21px,4vw,32px);font-weight:600;letter-spacing:-.4px;color:#a9f5c0}
+  .hero-role{font-size:clamp(21px,4vw,32px);font-weight:600;letter-spacing:-.4px;color:#a9f5c0}
   .hero-role .hl{background:linear-gradient(92deg,var(--acc1),var(--acc2));-webkit-background-clip:text;background-clip:text;color:transparent}
   .hero-sub{max-width:640px;margin:22px auto 0;color:var(--muted);font-size:17.5px}
   .hero-sub strong{color:var(--txt);font-weight:700}
@@ -131,8 +136,8 @@
   .term-bar{display:flex;align-items:center;gap:8px;padding:13px 16px;border-bottom:1px solid var(--line);background:rgba(0,255,65,.04)}
   .term-bar i{width:11px;height:11px;border-radius:50%;display:block}
   .term-bar .r{background:#ff5f57}.term-bar .y{background:#febc2e}.term-bar .g{background:#28c840}
-  .term-bar span{margin-left:10px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--dim);letter-spacing:.4px}
-  .term-body{padding:20px 22px 22px;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:2.05;overflow-x:auto;white-space:nowrap}
+  .term-bar span{margin-left:10px;font-size:12px;color:var(--dim);letter-spacing:.4px}
+  .term-body{padding:20px 22px 22px;font-size:13.5px;line-height:2.05;overflow-x:auto;white-space:nowrap}
   .term-body .cmd{color:#dcffe6}
   .term-body .cmd::before{content:"$ ";color:var(--acc1);font-weight:700}
   .term-body .ok{color:var(--ok)}
@@ -140,16 +145,16 @@
   .term-body .out{color:#00ff41}
 
   /* ---------- sections ---------- */
-  section{padding:40px 0;position:relative}
+  section{padding:40px 0;position:relative;scroll-margin-top:16px}
   .sec-head{margin-bottom:28px;position:relative}
-  .sec-tag{display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;letter-spacing:2.6px;color:var(--acc1);text-transform:uppercase}
+  .sec-tag{display:flex;align-items:center;gap:14px;font-size:12.5px;font-weight:700;letter-spacing:2.6px;color:var(--acc1);text-transform:uppercase}
   .sec-tag::after{content:"";height:1px;width:72px;background:linear-gradient(90deg,rgba(0,255,65,.65),transparent)}
-  h2{font-family:'JetBrains Mono',monospace;font-size:clamp(32px,5vw,46px);font-weight:700;letter-spacing:-1px;margin-top:14px}
+  h2{font-size:clamp(32px,5vw,46px);font-weight:700;letter-spacing:-1px;margin-top:14px}
   .sec-head p{color:var(--muted);max-width:660px;margin-top:12px;font-size:16.5px}
 
   /* about bento */
   .bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-  .tile{padding:30px;overflow:hidden}
+  .tile{padding:28px;overflow:hidden}
   .tile:hover{transform:translateY(-3px)}
   .tile-main{grid-column:span 3}
   .tile-facts{grid-column:span 1}
@@ -161,7 +166,7 @@
   .facts li{padding:10px 0;border-bottom:1px dashed var(--line)}
   .facts li:first-child{padding-top:0}
   .facts li:last-child{border-bottom:none;padding-bottom:0}
-  .facts .k{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
+  .facts .k{display:block;font-size:11px;color:var(--dim);letter-spacing:1px;text-transform:uppercase}
   .facts .v{font-weight:700;font-size:14.5px}
 
   /* focus bento */
@@ -171,8 +176,8 @@
   @media(max-width:900px){.focus-item,.focus-item:nth-child(4),.focus-item:nth-child(5){grid-column:span 3}}
   @media(max-width:600px){.focus-item,.focus-item:nth-child(4),.focus-item:nth-child(5){grid-column:span 6}}
   .focus-item:hover{transform:translateY(-3px)}
-  .focus-item .idx{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--acc1);font-weight:700;letter-spacing:1px;position:relative}
-  .focus-item h3{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;margin:12px 0 8px;position:relative}
+  .focus-item .idx{font-size:12px;color:var(--acc1);font-weight:700;letter-spacing:1px;position:relative}
+  .focus-item h3{font-size:18px;font-weight:600;margin:12px 0 8px;position:relative}
   .focus-item p{color:var(--muted);font-size:14.5px;line-height:1.62;position:relative}
 
   /* steps */
@@ -182,12 +187,12 @@
   .step{padding:28px;overflow:hidden}
   .step:hover{transform:translateY(-3px)}
   .step .num{
-    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13.5px;color:#021207;
+    font-weight:700;font-size:13.5px;color:#021207;
     width:34px;height:34px;border-radius:11px;display:grid;place-items:center;
     background:linear-gradient(135deg,var(--acc1),var(--acc2));
     box-shadow:0 10px 24px -8px rgba(0,255,65,.5);margin-bottom:16px;position:relative;
   }
-  .step h3{font-family:'JetBrains Mono',monospace;font-size:16.5px;font-weight:600;margin-bottom:7px;position:relative}
+  .step h3{font-size:16.5px;font-weight:600;margin-bottom:7px;position:relative}
   .step p{color:var(--muted);font-size:14px;line-height:1.62;position:relative}
 
   /* contact */
@@ -202,12 +207,20 @@
   .social-btn:hover{color:var(--acc1);border-color:rgba(0,255,65,.55);transform:translateY(-3px);box-shadow:0 16px 32px -12px rgba(0,255,65,.4)}
   .social-btn svg{width:27px;height:27px;fill:currentColor}
   .pgp-note{color:var(--dim);font-size:14px;margin-top:26px}
-  .pgp-note a{color:var(--acc1);font-family:'JetBrains Mono',monospace;font-size:13.5px}
+  .pgp-note a{color:var(--acc1);font-size:13.5px}
   .pgp-note a:hover{text-decoration:underline}
 
+  @media(max-width:600px){
+    .term-body{font-size:12px;line-height:1.95;padding:16px 16px 18px}
+    .hero-actions .btn{padding:13px 22px}
+  }
   footer{padding:16px 0 0;position:relative;z-index:2}
-  .foot{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:center;align-items:center;padding-bottom:14px}
-  .foot .l{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim)}
+  .foot{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;align-items:center;padding-bottom:14px}
+  .foot .l{font-size:13px;color:var(--dim)}
+  .foot nav{display:flex;flex-wrap:wrap;gap:6px 20px}
+  .foot nav a{font-size:13px;color:var(--muted);transition:color .18s ease}
+  .foot nav a:hover{color:var(--acc1)}
+  @media(max-width:600px){.foot{justify-content:center;text-align:center}.foot nav{justify-content:center}}
 </style>
 </head>
 <body>
@@ -223,7 +236,7 @@
 <main id="top">
 
   <!-- HERO -->
-  <div class="hero">
+  <header class="hero">
     <div class="wrap">
       <span class="eyebrow"><span class="dot"></span>INDEPENDENT SECURITY RESEARCHER</span>
       <h1><span class="grad">Hdr</span>.</h1>
@@ -247,7 +260,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </header>
 
   <!-- ABOUT -->
   <section id="about">
@@ -380,7 +393,14 @@
 <footer>
   <div class="wrap foot">
     <div class="l">© 2026 Hdr — hdrapp.tech</div>
-
+    <nav aria-label="Footer">
+      <a href="https://x.com/Hdr284" target="_blank" rel="noopener">X</a>
+      <a href="https://github.com/hdr2804" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://farcaster.xyz/hdr" target="_blank" rel="noopener">Farcaster</a>
+      <a href="https://t.me/Hdr2804" target="_blank" rel="noopener">Telegram</a>
+      <a href="/.well-known/security.txt">security.txt</a>
+      <a href="#top">Back to top ↑</a>
+    </nav>
   </div>
 
 </footer>
