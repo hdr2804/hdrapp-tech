@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#020503" />
 <title>Hdr — Independent Security Researcher · hdrapp.tech</title>
-<meta name="description" content="Hdr — independent security researcher based in Indonesia. Smart-contract and protocol security: EVM, Solana, cross-chain settlement. PoC-driven responsible disclosure." />
+<meta name="description" content="Hdr — independent security researcher based in Indonesia. Smart-contract and protocol security (EVM, Solana, cross-chain settlement), platform API security, and trading-engine testing. PoC-driven responsible disclosure." />
 <meta property="og:title" content="Hdr — Independent Security Researcher" />
 <meta property="og:description" content="Smart-contract & protocol security research. Every finding validated with a runnable proof-of-concept before it is reported." />
 <meta property="og:type" content="website" />
@@ -244,7 +244,7 @@
     <div class="wrap">
       <span class="eyebrow"><span class="dot"></span>INDEPENDENT SECURITY RESEARCHER</span>
       <h1 class="hero-role">Smart-contract &amp; <span class="hl">protocol security</span> research.</h1>
-      <p class="hero-sub">I audit Web3 protocols the way an attacker would read them — then prove every finding with a <strong>runnable proof-of-concept</strong> against pinned source before it is reported. <strong>Responsible disclosure, always.</strong></p>
+      <p class="hero-sub">I audit Web3 protocols, platform APIs, and trading systems the way an attacker would read them — then prove every finding with a <strong>runnable proof-of-concept</strong> against pinned source before it is reported. <strong>Responsible disclosure, always.</strong></p>
 
       <div class="hero-actions">
         <a class="btn primary" href="mailto:security@hdrapp.tech">Report / contact</a>
@@ -259,7 +259,9 @@
           <div><span class="ok">[ok]</span> build from pinned commit</div>
           <div><span class="ok">[ok]</span> exploit path executed — fork / validator / sandbox</div>
           <div><span class="ok">[ok]</span> impact quantified from observed state</div>
-          <div><span class="ok">[ok]</span> dedupe — no public duplicate found</div>
+          <div><span class="ok">[ok]</span> deployment — vulnerable code confirmed live on the in-scope asset</div>
+          <div><span class="ok">[ok]</span> dedupe — mechanism-level, checked across platforms</div>
+          <div><span class="ok">[ok]</span> kill pass — an internal red team tries to refute the claim first</div>
           <div class="out">→ report ready for coordinated disclosure</div>
         </div>
       </div>
@@ -275,7 +277,8 @@
       </div>
       <div class="bento">
         <div class="tile tile-main glass spot reveal">
-          <p>I am an independent security researcher focused on <strong>Web3 protocol security</strong> — smart contracts, cross-chain settlement, and the off-chain services that attest to on-chain state.</p>
+          <p>I am an independent security researcher focused on <strong>Web3 protocol security</strong> — smart contracts, cross-chain settlement, and the off-chain services that attest to on-chain state — and on the <strong>platform and trading systems</strong> around them: multi-tenant APIs, package registries, matching engines, and funding settlement.</p>
+          <p>The work runs as a continuous pipeline across public bug-bounty programs (HackerOne, Immunefi, Cantina, HackenProof, AuditOne) and direct disclosure to development teams, operated under <a href="/product/">HdrApp</a> — the local-first research platform I build and use for it.</p>
           <p>Every finding I submit is validated end-to-end before it leaves my desk: the vulnerable code is built from its <strong>pinned source</strong>, the exploit path is <strong>executed locally</strong> (fork, local validator, or sandbox), the impact is <strong>quantified from observed state</strong>, and the claim is checked against the public record so maintainers never receive a duplicate.</p>
           <p>If a hypothesis cannot be executed, it is not reported as a vulnerability. That discipline is the whole practice.</p>
         </div>
@@ -283,7 +286,7 @@
           <ul class="facts">
             <li><span class="k">Researcher</span><span class="v">Hdr</span></li>
             <li><span class="k">Based in</span><span class="v">Indonesia</span></li>
-            <li><span class="k">Focus</span><span class="v">Contracts &amp; protocols</span></li>
+            <li><span class="k">Focus</span><span class="v">Contracts, protocols &amp; platforms</span></li>
             <li><span class="k">Method</span><span class="v">PoC-driven disclosure</span></li>
             <li><span class="k">Email</span><span class="v">security@hdrapp.tech</span></li>
           </ul>
@@ -326,6 +329,16 @@
           <h3>Oracle &amp; attestation paths</h3>
           <p>Off-chain attestors and oracle services that mint, transfer, or release funds based on what they believe happened on another chain.</p>
         </div>
+        <div class="focus-item glass spot reveal">
+          <div class="idx">/06</div>
+          <h3>Platform &amp; API security</h3>
+          <p>Multi-tenant SaaS and registry surfaces — tenant isolation, staged-upload and object-ownership binding, invitation and permission flows — tested with paired accounts against the live service.</p>
+        </div>
+        <div class="focus-item glass spot reveal">
+          <div class="idx">/07</div>
+          <h3>Trading &amp; settlement engines</h3>
+          <p>Matching priority, order-lifecycle semantics, and funding settlement — the documented rule is the spec; the engine's observed behaviour is checked against it at the exact boundary where they can diverge.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -341,12 +354,12 @@
         <div class="step glass spot reveal">
           <div class="num">1</div>
           <h3>Local validation</h3>
-          <p>The finding is executed against pinned source — fork, local validator, or sandbox. No execution, no report.</p>
+          <p>The finding is executed against pinned source — fork, local validator, or sandbox — and the vulnerable code is confirmed live on the actual in-scope deployment. No execution, no report.</p>
         </div>
         <div class="step glass spot reveal">
           <div class="num">2</div>
-          <h3>Whole-web dedupe</h3>
-          <p>The root cause is checked against advisories, audits, and public disclosures so maintainers never get a duplicate.</p>
+          <h3>Mechanism-level dedupe &amp; kill pass</h3>
+          <p>The mechanism is decomposed and checked against audits, advisories, and disclosed reports on every platform that covers the target — and against the project's own documented design. Then a dedicated internal pass tries to kill the claim. Only survivors ship.</p>
         </div>
         <div class="step glass spot reveal">
           <div class="num">3</div>
