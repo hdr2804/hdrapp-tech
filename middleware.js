@@ -1,7 +1,10 @@
 const CANARY_HOST = "canary.hdrapp.tech";
 const USER = "bbcanary";
 const PASS = "h3-throwaway-2026";
-const GATED = ["/canary.html", "/forbidden.html"];
+const GATED = new Set([
+  "/canary.html", "/canary", "/h3/canary.html", "/h3/canary",
+  "/forbidden.html", "/forbidden", "/h3/forbidden.html", "/h3/forbidden",
+]);
 
 export default function middleware(request) {
   const url = new URL(request.url);
@@ -18,7 +21,7 @@ export default function middleware(request) {
     url.pathname = "/h3/index.html";
     return Response.redirect(url);
   }
-  if (url.pathname === "/canary.html" || url.pathname === "/forbidden.html") {
+  if (GATED.has(url.pathname)) {
     const auth = request.headers.get("authorization") || "";
     let ok = false;
     if (auth.startsWith("Basic ")) {
@@ -30,10 +33,16 @@ export default function middleware(request) {
         headers: { "WWW-Authenticate": 'Basic realm="bb-canary"' },
       });
     }
-    url.pathname = "/h3" + url.pathname;
-    return Response.redirect(url);
+    if (!url.pathname.startsWith("/h3/")) {
+      url.pathname = "/h3" + url.pathname.replace(/\.html$/, "") + ".html";
+      return Response.redirect(url);
+    }
+    return; // authenticated, canonical path: serve the static file
   }
-  return; // any other path on the canary host: default handling
+  return;
 }
 
-export const config = { matcher: ["/", "/robots.txt", "/canary.html", "/forbidden.html"] };
+export const config = {
+  matcher: ["/", "/robots.txt", "/canary.html", "/canary", "/forbidden.html", "/forbidden",
+            "/h3/canary.html", "/h3/canary", "/h3/forbidden.html", "/h3/forbidden"],
+};
