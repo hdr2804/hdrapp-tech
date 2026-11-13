@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" width="1000" height="1000">
+  <defs>
+    <linearGradient id="bronze" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e0aa60"/>
+      <stop offset="1" stop-color="#8c5a2b"/>
+    </linearGradient>
+    <linearGradient id="cape" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#b03030"/>
+      <stop offset="1" stop-color="#7c1d1d"/>
+    </linearGradient>
+    <radialGradient id="bg" cx="0.5" cy="0.38" r="0.75">
+      <stop offset="0" stop-color="#274b8f"/>
+      <stop offset="1" stop-color="#0b2447"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <circle cx="500" cy="470" r="330" fill="#ffffff" opacity="0.06"/>
+  <circle cx="500" cy="470" r="332" fill="none" stroke="#ffd23f" stroke-width="3" stroke-dasharray="4 14" opacity="0.7"/>
+
+  <!-- cape -->
+  <path d="M368 470 L300 830 Q500 880 700 830 L632 470 Q500 420 368 470Z" fill="url(#cape)"/>
+
+  <!-- legs -->
+  <rect x="428" y="742" width="52" height="118" rx="16" fill="#6e4520"/>
+  <rect x="522" y="742" width="52" height="118" rx="16" fill="#6e4520"/>
+  <path d="M414 858 h76 l8 30 h-96 Z" fill="#54350f"/>
+  <path d="M510 858 h76 l8 30 h-96 Z" fill="#54350f"/>
+
+  <!-- torso -->
+  <path d="M392 486 q0 -40 40 -40 h136 q40 0 40 40 l-14 238 q-3 26 -30 26 h-128 q-27 0 -30 -26 Z" fill="url(#bronze)"/>
+  <!-- chest emblem: candlestick -->
+  <g>
+    <rect x="474" y="540" width="8" height="86" fill="#5d4517"/>
+    <rect x="462" y="560" width="32" height="48" rx="4" fill="#2a9d57"/>
+    <rect x="518" y="528" width="8" height="98" fill="#5d4517"/>
+    <rect x="506" y="548" width="32" height="56" rx="4" fill="#f4a261"/>
+    <path d="M486 668 L520 640 L514 660 L538 660 L498 692 L500 668 Z" fill="#35d461"/>
+  </g>
+  <!-- belt -->
+  <rect x="404" y="700" width="192" height="20" fill="#54350f"/>
+  <rect x="478" y="694" width="44" height="32" rx="6" fill="#ffd23f"/>
+
+  <!-- right arm raised, holding mini trophy -->
+  <path d="M596 500 L676 372 L714 396 L640 528 Z" fill="url(#bronze)"/>
+  <circle cx="706" cy="382" r="20" fill="#d9a05b"/>
+  <g>
+    <path d="M664 268 h96 l-13 62 a48 44 0 0 1 -70 0 Z" fill="#f4b942"/>
+    <rect x="700" y="322" width="22" height="18" fill="#d9962c"/>
+    <path d="M682 352 h58 l10 16 h-78 Z" fill="#f4b942"/>
+    <rect x="682" y="212" width="8" height="58" fill="#e9c46a"/>
+    <rect x="676" y="228" width="20" height="28" fill="#2a9d57"/>
+    <rect x="726" y="204" width="8" height="66" fill="#e9c46a"/>
+    <rect x="720" y="222" width="20" height="34" fill="#2a9d57"/>
+  </g>
+
+  <!-- left arm waving -->
+  <path d="M404 500 L322 420 L352 388 L428 462 Z" fill="url(#bronze)"/>
+  <circle cx="330" cy="398" r="21" fill="#d9a05b"/>
+
+  <!-- head -->
+  <circle cx="500" cy="330" r="104" fill="url(#bronze)"/>
+  <path d="M396 322 a104 104 0 0 1 208 0 l0 -20 a104 92 0 0 0 -208 0 Z" fill="#8c5a2b"/>
+  <!-- plume -->
+  <path d="M486 196 q20 -56 70 -50 q-26 18 -30 54 q24 -26 54 -22 q-32 24 -38 62 l-46 10 q-16 -28 -10 -54Z" fill="#d64545"/>
+  <!-- candlestick antenna -->
+  <rect x="496" y="120" width="9" height="34" fill="#8c5a2b"/>
+  <rect x="488" y="86" width="26" height="38" rx="4" fill="#2a9d57"/>
+  <rect x="498" y="72" width="6" height="16" fill="#e9c46a"/>
+  <rect x="498" y="122" width="6" height="12" fill="#e9c46a"/>
+  <!-- face -->
+  <circle cx="462" cy="338" r="17" fill="#7bf1ff"/>
+  <circle cx="538" cy="338" r="17" fill="#7bf1ff"/>
+  <circle cx="467" cy="333" r="6" fill="#ffffff"/>
+  <circle cx="543" cy="333" r="6" fill="#ffffff"/>
+  <path d="M466 384 q34 24 68 0" stroke="#54350f" stroke-width="9" fill="none" stroke-linecap="round"/>
+  <circle cx="428" cy="372" r="10" fill="#e88" opacity="0.55"/>
+  <circle cx="572" cy="372" r="10" fill="#e88" opacity="0.55"/>
+  <!-- laurel on chest -->
+  <g fill="#3f9e4d">
+    <ellipse cx="440" cy="640" rx="17" ry="8" transform="rotate(-32 440 640)"/>
+    <ellipse cx="458" cy="662" rx="17" ry="8" transform="rotate(-12 458 662)"/>
+    <ellipse cx="560" cy="640" rx="17" ry="8" transform="rotate(32 560 640)"/>
+    <ellipse cx="542" cy="662" rx="17" ry="8" transform="rotate(12 542 662)"/>
+  </g>
+
+  <text x="500" y="952" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="40" font-weight="bold" letter-spacing="10" fill="#ffffff">PROVIE</text>
+  <text x="500" y="986" text-anchor="middle" font-family="Verdana, Arial, sans-serif" font-size="19" letter-spacing="5" fill="#ffd23f">THE AIPROVE MASCOT · AGENT GLADIATOR</text>
+</svg>
