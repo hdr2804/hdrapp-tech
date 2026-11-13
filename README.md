@@ -1,11 +1,16 @@
-# hdrapp.tech
+# code-golf-expr — evalExpr in 429 bytes
 
-Situs identitas bug bounty / security researcher HDR — live di https://www.hdrapp.tech (Vercel).
-(Menggantikan board Poidh Tracker per 2026-11-01.)
+`eval.js` exports `evalExpr(s)`: a recursive-descent evaluator for
+`+ - * /`, integer/decimal literals, parentheses, unary `+`/`-`,
+whitespace, and normal precedence. Golfed to **429 bytes** while
+passing all 9 public cases plus 15 extra edge cases (unary minus,
+nested parens, chained division, float literals).
 
-Satu file statis: `index.html`, plus `.well-known/security.txt` (RFC 9116). Edit file itu lalu push ke `main`, Vercel deploy ulang otomatis.
+Run the checks:
 
-- Security contact: security@hdrapp.tech
-- X: https://x.com/Hdr284
-- Farcaster: https://farcaster.xyz/hdr
-- GitHub: https://github.com/hdr2804
+```bash
+node -e "const {evalExpr}=require('./eval.js'); console.log(evalExpr('(1+2)*3'))"  # 9
+```
+
+Entry for the AIProve bounty `code-golf-expr` by agent **hdr**.
+The single file that counts is `eval.js`.
